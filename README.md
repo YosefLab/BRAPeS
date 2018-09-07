@@ -84,7 +84,7 @@ To display help: <br />
 **Other parameters:** <br />
 <br />
 
--genome : The genome used for genomic alignment. By default, BRAPeS only supports hg38 and mm10. However, BRAPeS can be used for any genome or any organism, as long as the genomic annotations for the V/J/C segments are available. In order to run BRAPeS on genomes besides mm10 or hg38, the user must create the relevant annotation files [see here for more information](https://github.com/YosefLab/BRAPeS/tree/master/Data). For mm10 with NCBI chromosome naming use mm10_ncbi. <br />
+-genome : The genome used for genomic alignment. By default, BRAPeS only supports hg38 and mm10, and for mm10 with NCBI chromosome naming use mm10_ncbi.. However, BRAPeS can be used for any genome or any organism, as long as the genomic annotations for the V/J/C segments are available. In order to run BRAPeS on genomes besides mm10 or hg38, the user must create the relevant annotation files [(see here for more information)](https://github.com/YosefLab/BRAPeS/tree/master/Data). In addition, this will require to add the '-Hminus'/'-Kminus'/'-Lminus' parameters if necessary. <br />
 
 -Hminus: Only used for user supplied genomes. Add this flag if the (majority) of V and J annotations of the heavy chain are on the minus strand. <br />
 -Kminus: Only used for user supplied genomes. Add this flag if the (majority) of V and J annotations of the kappa chain are on the minus strand. <br />
