@@ -4,6 +4,8 @@ We present BRAPeS (BCR Reconstruction Algorithm for Paired-End Single-cell), a s
 
 BRAPeS is an extension of [TRAPeS](https://github.com/YosefLab/TRAPeS), and reconstruct the BCR in 4 steps: For each chain, it first identify the V and J segments by searching for paired reads with one read mapping to the V segment and its mate mapping to the J segment. Then, a set of putative CDR3-originating reads are identified as the set of unmapped reads whose mates map to the V,J and C segments. Next, an iterative dynamic programming algorithm is used to reconstruct the CDR3 region with the putative CDR3 reads. Finally, the isotype of the BCR is determined by running RSEM on the reconstructed sequence with all possible constant segments added to it. <br />  
 
+For more information, see our paper on [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
+<br />  
 
 ##installing BRAPeS <br />  
 
@@ -83,6 +85,10 @@ To display help: <br />
 <br />
 
 -genome : The genome used for genomic alignment. Currently only hg38 or mm10 are supported. For mm10 with NCBI chromosome naming use mm10_ncbi. <br />
+
+-Hminus: Only used for user supplied genomes. Add this flag if the (majority) of V and J annotations of the heavy chain are on the minus strand. <br />
+-Kminus: Only used for user supplied genomes. Add this flag if the (majority) of V and J annotations of the kappa chain are on the minus strand. <br />
+-Lminus: Only used for user supplied genomes. Add this flag if the (majority) of V and J annotations of the lambda chain are on the minus strand. <br />
 
 -strand : Strand orientation of the reads, options are [minus, plus, none]. For transcripts on the positive strand, to which strand does the rightmost (in genomic coordinates) mate of the read map to. Default is minus. <br />
 <br /><br />
