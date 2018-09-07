@@ -15,8 +15,8 @@ from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
 
 
-def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thresholdScore, minOverlap, rsem, bowtie2, singleCell, path, sumF, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample):
-    checkParameters(genome, strand, singleCell, path, sumF)
+def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thresholdScore, minOverlap, rsem, bowtie2, singleCell, path, sumF, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, Hminus, Kminus, Lminus):
+    checkParameters(strand, singleCell, path, sumF)
     if singleCell == True:
         # TODO: Fix this, won't work for SE
         #runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore, minOverlap,
@@ -29,6 +29,8 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
     finalStatDict = dict()
     tcrFout = open(sumF + '.BCRs.txt','w')
     opened = False
+    currFolder = os.path.abspath(os.path.dirname(sys.argv[0])) + '/'
+    (fasta, bed, mapping, aaF) = getGenomeFiles(currFolder, genome)
     for cellFolder in os.listdir(path):
         fullPath = path + cellFolder + '/'
         if((os.path.exists(fullPath)) & (os.path.isdir(fullPath))):
@@ -45,34 +47,10 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
                 sys.stderr.flush()
 
             else:
-                currFolder = os.path.abspath(os.path.dirname(sys.argv[0])) + '/'
                 #reconstruction = currFolder + '/vdj.alignment'
                 reconstruction = currFolder + '/vdj.alignment.bcr'
-                if genome == 'hg38':
-                    fasta = currFolder + 'Data/hg38/hg38.BCR.fa'
-                    bed = currFolder + 'Data/hg38/hg38.BCR.bed'
-                    mapping = currFolder + 'Data/hg38/hg38.id.name.mapping.BCR.txt'
-                    aaF = currFolder + 'Data/hg38/hg38.BCR.conserved.AA.txt'
-                if genome == 'mm10':
-                    fasta = currFolder + 'Data/mm10/mm10.BCR.fa'
-                    bed = currFolder + 'Data/mm10/mm10.BCR.bed'
-                    mapping = currFolder + 'Data/mm10/mm10.gene.id.mapping.BCR.txt'
-                    aaF = currFolder + 'Data/mm10/mm10.BCR.conserved.AA.txt'
-                if genome == 'mm10_ncbi':
-                    fasta = currFolder + 'Data/mm10_ncbi/mm10.BCR.fa'
-                    bed = currFolder + 'Data/mm10_ncbi/mm10.BCR.bed'
-                    mapping = currFolder + 'Data/mm10_ncbi/mm10.gene.id.mapping.BCR.txt'
-                    aaF = currFolder + 'Data/mm10_ncbi/mm10.BCR.conserved.AA.txt'
-                if genome == 'hg19':
-                    sys.stdout.write(str(datetime.datetime.now()) + " Warning! BRAPeS currently does not work on hg19, please use hg38\n")
-                    sys.stdout.flush()
-                    fasta = currFolder + 'Data/hg19/hg19.TCR.fa'
-                    bed = currFolder + 'Data/hg19/hg19.TCR.bed'
-                    mapping = currFolder + 'Data/hg19/hg19.gene.id.mapping.TCR.txt'
-                    aaF = currFolder + 'Data/hg19/hg19.conserved.AA.txt'
-
                 runSingleCell(fasta, bed, noutput, nbam, nunmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore,
-                            minOverlap, rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, genome)
+                            minOverlap, rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, genome, Hminus, Kminus, Lminus)
                 opened = addCellToTCRsum(cellFolder, noutput, opened, tcrFout)
                 finalStatDict = addToStatDict(noutput, cellFolder, finalStatDict)
     sumFout = open(sumF + '.summary.txt','w')
@@ -82,6 +60,36 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
         sumFout.write(fout)
     sumFout.close()
 
+
+def getGenomeFiles(currFolder, genome):
+    dataFold = currFolder + 'Data/' + genome + '/'
+    fasta = 'NA'
+    bed = 'NA'
+    mapping = 'NA'
+    aaF = 'NA'
+    if os.path.isdir(dataFold):
+        for ff in os.listdir(dataFold):
+            if not ff.startswith('.'):
+                if ff.endswith('BCR.bed'):
+                    bed = dataFold + ff
+                elif ff.endswith('conserved.AA.txt'):
+                    aaF = dataFold + ff
+                elif ff.endswith('BCR.fa'):
+                    fasta = dataFold + ff
+                elif ff.endswith('gene.id.mapping.BCR.txt'):
+                    mapping = dataFold + ff
+        if (fasta == 'NA'):
+            sys.exit(str(datetime.datetime.now()) + " Error! BCR fasta file is missing in the Data/genome folder\n")
+        if (mapping == 'NA'):
+            sys.exit(str(datetime.datetime.now()) + " Error! BCR gene id mapping file is missing in the Data/genome folder\n")
+        if (bed == 'NA'):
+            sys.exit(str(datetime.datetime.now()) + " Error! BCR bed file is missing in the Data/genome folder\n")
+        if (aaF == 'NA'):
+            sys.exit(str(datetime.datetime.now()) + " Error! BCR conserved AA file is missing in the Data/genome folder\n")
+    else:
+        sys.exit(str(datetime.datetime.now()) + " Error! Genome parameter is invalid, no folder named: " + dataFold + '\n')
+
+    return(fasta, bed, mapping, aaF)
 
 def addCellToTCRsum(cellFolder, noutput, opened, tcrFout):
     if os.path.isfile(noutput + '.summary.txt'):
@@ -264,19 +272,19 @@ def makeOutputDir(output, fullPath):
 
 
 def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore, minOverlap,
-                  rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, organism):
+                  rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, organism, Hminus, Kminus, Lminus):
     idNameDict = makeIdNameDict(mapping)
     fastaDict = makeFastaDict(fasta)
     vdjDict = makeVDJBedDict(bed, idNameDict)
     sys.stdout.write(str(datetime.datetime.now()) + " Pre-processing heavy chain\n")
     sys.stdout.flush()
-    unDictHeavy = analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, 'H', strand, NolowQ, top, byExp, readOverlap, downsample, organism)
+    unDictHeavy = analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, 'H', strand, NolowQ, top, byExp, readOverlap, downsample, organism, Hminus, Kminus, Lminus)
     sys.stdout.write(str(datetime.datetime.now()) + " Pre-processing kappa chain\n")
     sys.stdout.flush()
-    unDictKappa = analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, 'K', strand, NolowQ, top, byExp, readOverlap, downsample, organism)
+    unDictKappa = analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, 'K', strand, NolowQ, top, byExp, readOverlap, downsample, organism, Hminus, Kminus, Lminus)
     sys.stdout.write(str(datetime.datetime.now()) + " Pre-processing lambda chain\n")
     sys.stdout.flush()
-    unDictLambda = analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, 'L', strand, NolowQ, top, byExp, readOverlap, downsample, organism)
+    unDictLambda = analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, 'L', strand, NolowQ, top, byExp, readOverlap, downsample, organism, Hminus, Kminus, Lminus)
     sys.stdout.write(str(datetime.datetime.now()) + " Reconstructing heavy chains\n")
     sys.stdout.flush()
     subprocess.call([reconstruction, output + '.heavy.mapped.and.unmapped.fa', output + '.heavy.junctions.txt', output + '.reconstructed.junctions.heavy.fa', str(numIterations), str(thresholdScore), str(minOverlap)])
@@ -1442,9 +1450,9 @@ def findJsPerLen(curSeq, fastaDict, idNameDict,trim):
 
 
 
-def analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, chain, strand, NolowQ, top, byExp, readOverlap, downsample, organism):
+def analyzeChain(fastaDict, vdjDict, output, bam, unmapped, idNameDict, bases, chain, strand, NolowQ, top, byExp, readOverlap, downsample, organism, Hminus, Kminus, Lminus):
     junctionSegs = makeJunctionFile(bam, chain, output, bases, vdjDict, fastaDict, idNameDict, top, byExp, readOverlap, organism)
-    unDict = writeReadsFile(bam, unmapped, junctionSegs, output, vdjDict, chain, strand, NolowQ, downsample, organism)
+    unDict = writeReadsFile(bam, unmapped, junctionSegs, output, vdjDict, chain, strand, NolowQ, downsample, organism, Hminus, Kminus, Lminus)
     return unDict
 
 def getCInfo(bedEntry, idNameDict, fastaDict):
@@ -1580,7 +1588,7 @@ def loadReadsToDict(segsDict, mappedFile, readDict, readOverlap):
     return (readDict, countDict)
 
 
-def writeReadsFile(bam, unmapped, junctionSegs, output, vdjDict, chain, strand, NolowQ, downsample, organism):
+def writeReadsFile(bam, unmapped, junctionSegs, output, vdjDict, chain, strand, NolowQ, downsample, organism, Hminus, Kminus, Lminus):
     if chain == 'H':
         vdjChainDict = vdjDict['heavy']
         outReads = output + '.heavy.mapped.and.unmapped.fa'
@@ -1632,7 +1640,7 @@ def writeReadsFile(bam, unmapped, junctionSegs, output, vdjDict, chain, strand, 
     for read in alignedDict:
         record = SeqRecord(Seq(alignedDict[read], IUPAC.ambiguous_dna), id = read, description = '')
         SeqIO.write(record,out,'fasta')
-    (seqDict,unDict) = writeUnmappedReads(unmappedDict, out, unmapped, seqDict, unDict, fullAlignDict, lowQDict, NolowQ, chain, downsample, organism)
+    (seqDict,unDict) = writeUnmappedReads(unmappedDict, out, unmapped, seqDict, unDict, fullAlignDict, lowQDict, NolowQ, chain, downsample, organism, Hminus, Kminus, Lminus)
     seqDict = addMappedPairsToSeqDict(seqDict, bam, out, NolowQ, fullAlignDict, oriDict)
     writeSeqDict(seqDict, pairedReads1, pairedReads2)
     out.close()
@@ -1735,7 +1743,7 @@ def writeSeqDict(seqDict, r1, r2):
     r1f.close()
     r2f.close()
 
-def writeUnmappedReads(unmappedDict, out, unmapped, seqDict, unDict, alignedDict, lowQDict, NolowQ, chain, downsample, organism):
+def writeUnmappedReads(unmappedDict, out, unmapped, seqDict, unDict, alignedDict, lowQDict, NolowQ, chain, downsample, organism, Hminus, Kminus, Lminus):
     count = 0
     if downsample:
         if len(unmappedDict) > 5000:
@@ -1772,8 +1780,12 @@ def writeUnmappedReads(unmappedDict, out, unmapped, seqDict, unDict, alignedDict
                 qSeq = Seq(read.query_sequence, IUPAC.ambiguous_dna)
                 if ori == 'rev':
                     qSeq = qSeq.reverse_complement()
-                if ((chain == 'H') | ((chain == 'L') & (organism in ['mm10','mm10_ncbi']))):
-                    qSeq = qSeq.reverse_complement()
+                if organism in ['mm10','mm10_ncbi','hg38']:
+                    if ((chain == 'H') | ((chain == 'L') & (organism in ['mm10','mm10_ncbi']))):
+                        qSeq = qSeq.reverse_complement()
+                else:
+                    if (((chain == 'H') & (Hminus)) | ((chain == 'L') & (Lminus)) | ((chain == 'K') & (Kminus))):
+                        qSeq = qSeq.reverse_complement()
                 if name in alignedDict:
                     if alignedDict[name] != str(qSeq):
                         sys.stderr.write(str(datetime.datetime.now()) + ' Warning! unmapped read %s appear twice in alignedDict with differnet seqs\n' % name)
@@ -2085,9 +2097,7 @@ def makeIdNameDict(mapping):
     return fDict
 
 
-def checkParameters(genome, strand, singleCell, path, sumF):
-    if ((genome != 'hg38') & (genome != 'mm10') & (genome != 'hg19') & (genome != 'mm10_ncbi')):
-        sys.exit("-genome only accept one of the following: mm10, mm10_ncbi, hg38, hg19")
+def checkParameters(strand, singleCell, path, sumF):
     if strand.lower() not in ['none','minus','plus']:
         sys.exit("-strand should be one of: none, minus, plus")
     if not singleCell:
@@ -2105,7 +2115,7 @@ def checkParameters(genome, strand, singleCell, path, sumF):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-genome','-g','-G', help='Alignment genome. Currently supported: mm10, mm10_ncbi and hg38', required=True)
+    parser.add_argument('-genome','-g','-G', help='Alignment genome. Currently supported: mm10, mm10_ncbi and hg38. Other genomes require the user to prepare their own annotation files', required=True)
     parser.add_argument('-singleCell', help='add if you are only running on a single cell. If so,'
                                                         'it will ignore -path and -subpath arguments', action='store_true')
     parser.add_argument('-NoLowQ', help='add if you want to remove \"low quality\" reads as input to the reconstruction '
@@ -2139,9 +2149,16 @@ if __name__ == '__main__':
 
     parser.add_argument('-overlap','-ol','-OL', help='Number of minimum bases that overlaps V and J ends,'
                                                               'default is 10', type=int, default=10)
+    parser.add_argument('-Hminus', help='Only when running BRAPeS on user defined genomes. Add this flag if the annotation of the V/J segmenets'\
+                                                        'of the heavy chain are on the negative strand', action='store_true')
+    parser.add_argument('-Kminus', help='Only when running BRAPeS on user defined genomes. Add this flag if the annotation of the V/J segmenets'\
+                                                        'of the kappa chain are on the negative strand', action='store_true')
+    parser.add_argument('-Lminus', help='Only when running BRAPeS on user defined genomes. Add this flag if the annotation of the V/J segmenets'\
+                                                        'of the lambda chain are on the negative strand', action='store_true')
+
     args = parser.parse_args()
     runBCRpipe(args.genome, args.output, args.bam, args.unmapped, args.bases, args.strand,
                 args.iterations,args.score, args.overlap, args.rsem, args.bowtie2,
                   args.singleCell, args.path, args.sumF, args.NoLowQ, args.samtools, args.top, args.byExp, args.readOverlap,
-                  args.oneSide, args.downsample)
+                  args.oneSide, args.downsample, args.Hminus, args.Kminus, args.Lminus)
 
