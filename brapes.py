@@ -2187,7 +2187,7 @@ if __name__ == '__main__':
                                                         'with this option, the total number of mapped reads output by BRAPeS is lower than the true measure.', action='store_true')
     parser.add_argument('-skipHVR', help='Add this flag if you want to skip reconstruction of CDR1 and CDR2', action='store_true')
     parser.add_argument('-HVR_extension','-HVR_ext', help='The number of bases to extend the CDR1/2 region on both sides for the reconstruction. '
-                                               'Default is 5, it is recommended to increase this number for long reads. ', type=int, default=5)
+                                               'Default is 15.', type=int, default=15)
     parser.add_argument('-HVR_score','-HVR_sc', help='The alignment score threshold of the CDR1/2 reconstruction. '
                                                'Default is 15', type=int, default=15)
     parser.add_argument('-HVR_min_reads','-HVR_min', help='The minimal number of reads that needs to be mapped to the CDR1 or CDR2 to be considered a valid reconstruction. '
@@ -2195,7 +2195,7 @@ if __name__ == '__main__':
     parser.add_argument('-HVR_max_reads','-HVR_max', help='The max number of reads that will be mapped to the CDR1 or CDR2 before using those reads to reconstruct the CDR1/2 sequnece. '
                                                'Default is 200', type=int, default=200)
     parser.add_argument('-HVR_moveOn','-HVR_mo', help='The number of reads randomly sampled for CDR1/2 reconstruction. BRAPeS will try to align this number of reads to the CDR segmenets. If after aligning this number of reads there are less than HVR_min_reads mapped to the CDR, '
-                                               'the software will not attempt reconstruction. Default is 2000', type=int, default=2000)
+                                               'the software will not attempt reconstruction. Default is 30000', type=int, default=30000)
     parser.add_argument('-overlap','-ol','-OL', help='Number of minimum bases that overlaps V and J ends,'
                                                               'default is 10', type=int, default=10)
     parser.add_argument('-Hminus', help='Only when running BRAPeS on user defined genomes. Add this flag if the annotation of the V/J segmenets'\
