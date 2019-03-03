@@ -1,0 +1,77 @@
+Performing C++ SOURCE FILE Test CXX14_BUILTIN failed with the following output:
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_0273c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_0273c.dir/build.make CMakeFiles/cmTC_0273c.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0273c.dir/src.cxx.o
+/usr/bin/c++     -DCXX14_BUILTIN   -o CMakeFiles/cmTC_0273c.dir/src.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/src.cxx
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/src.cxx:2:6: error: #error NOCXX14
+     #error NOCXX14
+      ^
+CMakeFiles/cmTC_0273c.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_0273c.dir/src.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_0273c.dir/src.cxx.o] Error 1
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_0273c/fast' failed
+make: *** [cmTC_0273c/fast] Error 2
+
+Source file was:
+#if !defined(__cplusplus) || (__cplusplus < 201300L)
+    #error NOCXX14
+    #endif
+    int main() {}
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d9a48/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d9a48.dir/build.make CMakeFiles/cmTC_d9a48.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d9a48.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++     -std=c++14    -o CMakeFiles/cmTC_d9a48.dir/CheckSymbolExists.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Linking CXX executable cmTC_d9a48
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9a48.dir/link.txt --verbose=1
+/usr/bin/c++    -std=c++14     CMakeFiles/cmTC_d9a48.dir/CheckSymbolExists.cxx.o  -o cmTC_d9a48 -rdynamic 
+CMakeFiles/cmTC_d9a48.dir/CheckSymbolExists.cxx.o: In function `main':
+CheckSymbolExists.cxx:(.text+0x16): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_d9a48.dir/build.make:97: recipe for target 'cmTC_d9a48' failed
+make[1]: *** [cmTC_d9a48] Error 1
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_d9a48/fast' failed
+make: *** [cmTC_d9a48/fast] Error 2
+
+File /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_d0298/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d0298.dir/build.make CMakeFiles/cmTC_d0298.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d0298.dir/CheckFunctionExists.cxx.o
+/usr/bin/c++     -std=c++14 -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_d0298.dir/CheckFunctionExists.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_d0298
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d0298.dir/link.txt --verbose=1
+/usr/bin/c++    -std=c++14 -DCHECK_FUNCTION_EXISTS=pthread_create    CMakeFiles/cmTC_d0298.dir/CheckFunctionExists.cxx.o  -o cmTC_d0298 -rdynamic -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_d0298.dir/build.make:97: recipe for target 'cmTC_d0298' failed
+make[1]: *** [cmTC_d0298] Error 1
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_d0298/fast' failed
+make: *** [cmTC_d0298/fast] Error 2
+
+

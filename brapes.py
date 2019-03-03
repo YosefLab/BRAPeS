@@ -15,7 +15,9 @@ from Bio.SeqRecord import SeqRecord
 from Bio.Alphabet import IUPAC
 
 
-def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thresholdScore, minOverlap, rsem, bowtie2, singleCell, path, sumF, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, Hminus, Kminus, Lminus):
+def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thresholdScore, minOverlap, rsem, bowtie2,
+               singleCell, path, sumF, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample,
+               Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads, HVR_moveOn):
     checkParameters(strand, singleCell, path, sumF)
     if singleCell == True:
         # TODO: Fix this, won't work for SE
@@ -30,7 +32,9 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
     tcrFout = open(sumF + '.BCRs.txt','w')
     opened = False
     currFolder = os.path.abspath(os.path.dirname(sys.argv[0])) + '/'
-    (fasta, bed, mapping, aaF) = getGenomeFiles(currFolder, genome)
+    hvr_script = currFolder + 'hypervariable_reconstruction.py'
+    hvr_path = currFolder + 'HVR_recon'
+    (fasta, bed, mapping, aaF, ighv) = getGenomeFiles(currFolder, genome)
     for cellFolder in os.listdir(path):
         fullPath = path + cellFolder + '/'
         if((os.path.exists(fullPath)) & (os.path.isdir(fullPath))):
@@ -50,7 +54,9 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
                 #reconstruction = currFolder + '/vdj.alignment'
                 reconstruction = currFolder + '/vdj.alignment.bcr'
                 runSingleCell(fasta, bed, noutput, nbam, nunmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore,
-                            minOverlap, rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, genome, Hminus, Kminus, Lminus)
+                            minOverlap, rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, genome,
+                              Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads,
+                              HVR_moveOn, hvr_script, hvr_path, genome, ighv)
                 opened = addCellToTCRsum(cellFolder, noutput, opened, tcrFout)
                 finalStatDict = addToStatDict(noutput, cellFolder, finalStatDict)
     sumFout = open(sumF + '.summary.txt','w')
@@ -67,6 +73,7 @@ def getGenomeFiles(currFolder, genome):
     bed = 'NA'
     mapping = 'NA'
     aaF = 'NA'
+    ighv = 'NA'
     if os.path.isdir(dataFold):
         for ff in os.listdir(dataFold):
             if not ff.startswith('.'):
@@ -74,6 +81,8 @@ def getGenomeFiles(currFolder, genome):
                     bed = dataFold + ff
                 elif ff.endswith('conserved.AA.txt'):
                     aaF = dataFold + ff
+                elif ff.endswith('IGHV.fasta'):
+                    ighv = dataFold + ff
                 elif ff.endswith('BCR.fa'):
                     fasta = dataFold + ff
                 elif ff.endswith('gene.id.mapping.BCR.txt'):
@@ -86,10 +95,13 @@ def getGenomeFiles(currFolder, genome):
             sys.exit(str(datetime.datetime.now()) + " Error! BCR bed file is missing in the Data/genome folder\n")
         if (aaF == 'NA'):
             sys.exit(str(datetime.datetime.now()) + " Error! BCR conserved AA file is missing in the Data/genome folder\n")
+        if (ighv == 'NA'):
+            sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGHV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
+            sys.stdout.flush()
     else:
         sys.exit(str(datetime.datetime.now()) + " Error! Genome parameter is invalid, no folder named: " + dataFold + '\n')
 
-    return(fasta, bed, mapping, aaF)
+    return(fasta, bed, mapping, aaF, ighv)
 
 def addCellToTCRsum(cellFolder, noutput, opened, tcrFout):
     if os.path.isfile(noutput + '.summary.txt'):
@@ -272,7 +284,9 @@ def makeOutputDir(output, fullPath):
 
 
 def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore, minOverlap,
-                  rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, organism, Hminus, Kminus, Lminus):
+                  rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, organism,
+                  Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads,
+                  HVR_moveOn, hvr_script, hvr_path, genome, ighv):
     idNameDict = makeIdNameDict(mapping)
     fastaDict = makeFastaDict(fasta)
     vdjDict = makeVDJBedDict(bed, idNameDict)
@@ -310,7 +324,7 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
     tcrF = output + '.reconstructed.junctions.lambda.fa'
     (cSeq, cName, cId) = findBestCtoAppend(vdjDict['lambda']['C'], idNameDict, fastaDict, bam, downsample)
     createTCRFullOutput(fastaDict, tcrF, fullTcrFileLambda , bases, idNameDict, cSeq, cName, cId, oneSide)
-    sys.stdout.write(str(datetime.datetime.now()) + " Running RSEM to quantify expression of all possible isoforms\n")
+    sys.stdout.write(str(datetime.datetime.now()) + " Running RSEM to quantify expression of all possible isotypes\n")
     sys.stdout.flush()
     outDirInd = output.rfind('/')
     if outDirInd != -1:
@@ -337,6 +351,19 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
         fDictLambda = findCDR3(bestLambda, aaDict, fastaDict )
     else:
         fDictLambda = dict()
+    if skipHVR:
+        sys.stdout.write(str(datetime.datetime.now()) + " Skipping CDR1 and CDR2 reconstruction\n")
+        sys.stdout.flush()
+    else:
+        sys.stdout.write(str(datetime.datetime.now()) + " Performing CDR1 and CDR2 reconstruction\n")
+        sys.stdout.flush()
+        if os.path.isfile(bestHeavy):
+            bestHeavy = runHVRrecon(hvr_script, bestHeavy, 'heavy',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
+        if os.path.isfile(bestKappa):
+            bestKappa = runHVRrecon(hvr_script, bestKappa, 'kappa',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
+        if os.path.isfile(bestLambda):
+            bestLambda = runHVRrecon(hvr_script, bestLambda, 'lambda',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
+
     heavyRsemOut = output + '.heavy.rsem.out.genes.results'
     kappaRsemOut = output + '.kappa.rsem.out.genes.results'
     lambdaRsemOut = output + '.lambda.rsem.out.genes.results'
@@ -348,6 +375,16 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
     makeSingleCellOutputFile(fDictHeavy, fDictKappa, fDictLambda, output, heavyRsemOut,kappaRsemOut , lambdaRsemOut,
                              heavyBam, kappaBam, lambdaBam, fastaDict, unDictHeavy,unDictKappa, unDictLambda, idNameDict,
                              downsample)
+
+
+
+def runHVRrecon(hvr_script, bestIso, chain,HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv):
+    pref = bestIso.replace('.fa','')
+    subprocess.call(['python',hvr_script,hvr_path,bestIso, output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa', genome, 'All',
+                     str(HVR_extension), str(HVR_score), str(HVR_min_reads),str(HVR_max_reads), str(HVR_moveOn), pref, rsem, ighv])
+    curBestIso = pref + '.CDR1.CDR2.reconstructions.fasta'
+    return curBestIso
+
 
 
 
@@ -1234,19 +1271,21 @@ def runRsem(outDir, rsem, bowtie2, fullTcrFileHeavy, fullTcrFileKappa,fullTcrFil
 def runRSEMonOneFile(resF, rsem, bowtie2, rsemIndDir, output, samtools, chain):
     if os.path.exists(resF):
         if bowtie2 != '':
-            subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2', '--bowtie2-path', bowtie2 ,
-                             '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'])
-            subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
-                             '--bowtie2', '--bowtie2-path',bowtie2, '--bowtie2-mismatch-rate', '0.0' , '--paired-end',
-                             output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
-                             rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'])
+            with open(os.devnull, 'w') as devnull:
+                subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2', '--bowtie2-path', bowtie2 ,
+                                 '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
+                subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
+                                 '--bowtie2', '--bowtie2-path',bowtie2, '--bowtie2-mismatch-rate', '0.0' , '--paired-end',
+                                 output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
+                                 rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
         else:
-            subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2',
-                             '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'])
-            subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
-                             '--bowtie2', '--bowtie2-mismatch-rate', '0.0', '--paired-end',
-                             output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
-                             rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'])
+            with open(os.devnull, 'w') as devnull:
+                subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2',
+                                 '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
+                subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
+                                 '--bowtie2', '--bowtie2-mismatch-rate', '0.0', '--paired-end',
+                                 output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
+                                 rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
         unsortedBam = output + '.' + chain + '.rsem.out.transcript.bam'
         if not os.path.exists(unsortedBam):
             print "RSEM did not produce any transcript alignment files for " + chain + " chain, please check the -rsem parameter"
@@ -2146,7 +2185,17 @@ if __name__ == '__main__':
                                                         'read count, until top is reached', action='store_true')
     parser.add_argument('-downsample', help='Add this flag in case of a very large files (>100,000 mapped V/J/C reads to subsample the data'\
                                                         'with this option, the total number of mapped reads output by BRAPeS is lower than the true measure.', action='store_true')
-
+    parser.add_argument('-skipHVR', help='Add this flag if you want to skip reconstruction of CDR1 and CDR2', action='store_true')
+    parser.add_argument('-HVR_extension','-HVR_ext', help='The number of bases to extend the CDR1/2 region on both sides for the reconstruction. '
+                                               'Default is 5, it is recommended to increase this number for long reads. ', type=int, default=5)
+    parser.add_argument('-HVR_score','-HVR_sc', help='The alignment score threshold of the CDR1/2 reconstruction. '
+                                               'Default is 15', type=int, default=15)
+    parser.add_argument('-HVR_min_reads','-HVR_min', help='The minimal number of reads that needs to be mapped to the CDR1 or CDR2 to be considered a valid reconstruction. '
+                                               'Default is 10', type=int, default=10)
+    parser.add_argument('-HVR_max_reads','-HVR_max', help='The max number of reads that will be mapped to the CDR1 or CDR2 before using those reads to reconstruct the CDR1/2 sequnece. '
+                                               'Default is 200', type=int, default=200)
+    parser.add_argument('-HVR_moveOn','-HVR_mo', help='The number of reads randomly sampled for CDR1/2 reconstruction. BRAPeS will try to align this number of reads to the CDR segmenets. If after aligning this number of reads there are less than HVR_min_reads mapped to the CDR, '
+                                               'the software will not attempt reconstruction. Default is 2000', type=int, default=2000)
     parser.add_argument('-overlap','-ol','-OL', help='Number of minimum bases that overlaps V and J ends,'
                                                               'default is 10', type=int, default=10)
     parser.add_argument('-Hminus', help='Only when running BRAPeS on user defined genomes. Add this flag if the annotation of the V/J segmenets'\
@@ -2160,5 +2209,6 @@ if __name__ == '__main__':
     runBCRpipe(args.genome, args.output, args.bam, args.unmapped, args.bases, args.strand,
                 args.iterations,args.score, args.overlap, args.rsem, args.bowtie2,
                   args.singleCell, args.path, args.sumF, args.NoLowQ, args.samtools, args.top, args.byExp, args.readOverlap,
-                  args.oneSide, args.downsample, args.Hminus, args.Kminus, args.Lminus)
+                  args.oneSide, args.downsample, args.Hminus, args.Kminus, args.Lminus, args.skipHVR, args.HVR_extension,
+               args.HVR_score, args.HVR_min_reads, args.HVR_max_reads, args.HVR_moveOn)
 
