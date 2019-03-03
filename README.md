@@ -70,12 +70,12 @@ To display help: <br />
 
 -oneSide: Add this parameter to also search for productive reconstructions only from the extended V segment (in case of no overlap between the extended V and extended J segments). Default: off. <br />
 
-
 <br />
+
 **Parameters for the CDR1 and CDR2 reconstruction** <br />
 <br />
-
 Please note the BRAPeS currently reconstruct only the heavy chain hypervariable region. An updated version with light chain CDR1/2 reconstruction will be uploaded very soon.
+<br />
 <br />
 -skipHVR: Add this flag to avoid reconstructing the hypervariable regions. <br /> 
 -HVR_extension: The number of bases to extend the CDR1 and CDR2 from both sides for alignment. Default is 15. <br />
