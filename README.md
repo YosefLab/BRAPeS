@@ -2,7 +2,7 @@
 
 We present BRAPeS (BCR Reconstruction Algorithm for Paired-End Single-cell), a software for reconstruction of B cell receptors (BCR) using short, paired-end single-cell RNA-sequencing. <br />  
 
-BRAPeS is an extension of [TRAPeS](https://github.com/YosefLab/TRAPeS), and reconstruct the BCR in 4 steps: For each chain, it first identify the V and J segments by searching for paired reads with one read mapping to the V segment and its mate mapping to the J segment. Then, a set of putative CDR3-originating reads are identified as the set of unmapped reads whose mates map to the V,J and C segments. Next, an iterative dynamic programming algorithm is used to reconstruct the CDR3 region with the putative CDR3 reads. Finally, the isotype of the BCR is determined by running RSEM on the reconstructed sequence with all possible constant segments added to it. <br />  
+BRAPeS is an extension of [TRAPeS](https://github.com/YosefLab/TRAPeS), and reconstruct the BCR in 5 steps: For each chain, it first identify the V and J segments by searching for paired reads with one read mapping to the V segment and its mate mapping to the J segment. Then, a set of putative CDR3-originating reads are identified as the set of unmapped reads whose mates map to the V,J and C segments. Next, an iterative dynamic programming algorithm is used to reconstruct the CDR3 region with the putative CDR3 reads. The isotype of the BCR is then determined by running RSEM on the reconstructed sequence with all possible constant segments added to it. Finally, BRAPeS corrects for somatic hypermutations by collecting all reads aligning to the genomic CDR1 and CDR2 sequences and aligning the reads against themselves to obtain a reconstruction of the consensus sequence. <br />  
 
 For more information, see our paper on [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
 <br />  
@@ -50,7 +50,7 @@ To display help: <br />
 
 -sumF : Prefix for the output summary files of the entire path (summary of all single cells together). <br />
 <br />
-**Parameters for the BCR reconstruction** <br />
+**Parameters for the BCR (CDR3) reconstruction** <br />
 <br />
 -downsample : For very deep libraries, there can be many BCR-originating reads which can increase running time significantly. By adding this tag, in case there are more than 5,000 reads mapping to the V and J segment, and more than 5,000 putative CDR3-originating reads, BRAPeS will downsample the reads to include only 5,000 V-J reads and only 5,000 CDR3-originating reads for the reconstruction process. This will not influence the read mapping with RSEM to find the isotype. However, to further decrease running time the number of aligned reads reported at the summary file are underestimated. <br />
 
@@ -70,7 +70,19 @@ To display help: <br />
 
 -oneSide: Add this parameter to also search for productive reconstructions only from the extended V segment (in case of no overlap between the extended V and extended J segments). Default: off. <br />
 
+<br />
 
+**Parameters for the CDR1 and CDR2 reconstruction** <br />
+<br />
+Please note the BRAPeS currently reconstruct only the heavy chain hypervariable region. An updated version with light chain CDR1/2 reconstruction will be uploaded very soon.
+<br />
+<br />
+-skipHVR: Add this flag to avoid reconstructing the hypervariable regions. <br /> 
+-HVR_extension: The number of bases to extend the CDR1 and CDR2 from both sides for alignment. Default is 15. <br />
+-HVR_score: The minimum alignment score of  a read to the CDR1/CDR2 in order for it to be used for reconstruction. Default is 15. <br />
+-HVR_min_reads: The minimum number of reads that needs to align to the CDR1/2 in order to perform CDR1/2 reconstruction. If this number is not met the genomic sequence will be returned. Default is 10. <br />
+-HVR_max_reads: The maximum number of reads that needs to align to the CDR1/2. Once this number is met the algorithm will move on to reconstruct the CDR1/2 sequence. Default is 200. <br />
+-HVR_moveOn: The maximum number of reads that BRAPeS will randomly sample for the set of putative reads and attempt to align to the CDR1/2. Default is 30,000. <br />
 <br />
 
 **Paths to other software:** <br />
@@ -108,6 +120,8 @@ In addition, in each single cell folder you can find the following output files:
 -	output.\[heavy/kappa/lambda\].rsem.out* : The output files created by RSEM. <br />
 -	output.\[heavy/kappa/lambda\].full.BCRs.fa : Fasta file with the full BCR sequences. Includes all possible isotypes <br />
 -	output.\[heavy/kappa/lambda\].full.BCRs.bestIso.fa : Fasta file with the full sequences of the BCRs, after choosing only the highly expressed isotype. <br />
+- output.\[heavy/kappa/lambda\].full.BCRs.bestIso.CDR1.CDR2.reconstructions.fasta : The full BCR sequences after CDR1 and CDR2 reconstruction. <br />
+- output.\[heavy/kappa/lambda\].full.BCRs.bestIso.hypervariable.regions.fasta : The CDR1 and CDR2 reconstructed sequences. <br />
 -	output.summary.txt : Summary of all the reconstructed chains in this cell. <br />
 
 <br /><br />
