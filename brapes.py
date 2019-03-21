@@ -34,7 +34,7 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
     currFolder = os.path.abspath(os.path.dirname(sys.argv[0])) + '/'
     hvr_script = currFolder + 'hypervariable_reconstruction.py'
     hvr_path = currFolder + 'HVR_recon'
-    (fasta, bed, mapping, aaF, ighv) = getGenomeFiles(currFolder, genome)
+    (fasta, bed, mapping, aaF, ighv, igkv, iglv) = getGenomeFiles(currFolder, genome)
     for cellFolder in os.listdir(path):
         fullPath = path + cellFolder + '/'
         if((os.path.exists(fullPath)) & (os.path.isdir(fullPath))):
@@ -56,7 +56,7 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
                 runSingleCell(fasta, bed, noutput, nbam, nunmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore,
                             minOverlap, rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, genome,
                               Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads,
-                              HVR_moveOn, hvr_script, hvr_path, genome, ighv)
+                              HVR_moveOn, hvr_script, hvr_path, genome, ighv, igkv, iglv)
                 opened = addCellToTCRsum(cellFolder, noutput, opened, tcrFout)
                 finalStatDict = addToStatDict(noutput, cellFolder, finalStatDict)
     sumFout = open(sumF + '.summary.txt','w')
@@ -74,6 +74,8 @@ def getGenomeFiles(currFolder, genome):
     mapping = 'NA'
     aaF = 'NA'
     ighv = 'NA'
+    igkv = 'NA'
+    iglv = 'NA'
     if os.path.isdir(dataFold):
         for ff in os.listdir(dataFold):
             if not ff.startswith('.'):
@@ -83,6 +85,10 @@ def getGenomeFiles(currFolder, genome):
                     aaF = dataFold + ff
                 elif ff.endswith('IGHV.fasta'):
                     ighv = dataFold + ff
+                elif ff.endswith('IGKV.fasta'):
+                    igkv = dataFold + ff
+                elif ff.endswith('IGLV.fasta'):
+                    iglv = dataFold + ff
                 elif ff.endswith('BCR.fa'):
                     fasta = dataFold + ff
                 elif ff.endswith('gene.id.mapping.BCR.txt'):
@@ -98,10 +104,17 @@ def getGenomeFiles(currFolder, genome):
         if (ighv == 'NA'):
             sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGHV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
             sys.stdout.flush()
+        if (igkv == 'NA'):
+            sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGKV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
+            sys.stdout.flush()
+        if (iglv == 'NA'):
+            sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGLV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
+            sys.stdout.flush()
+
     else:
         sys.exit(str(datetime.datetime.now()) + " Error! Genome parameter is invalid, no folder named: " + dataFold + '\n')
 
-    return(fasta, bed, mapping, aaF, ighv)
+    return(fasta, bed, mapping, aaF, ighv, igkv, iglv)
 
 def addCellToTCRsum(cellFolder, noutput, opened, tcrFout):
     if os.path.isfile(noutput + '.summary.txt'):
@@ -286,7 +299,7 @@ def makeOutputDir(output, fullPath):
 def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore, minOverlap,
                   rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, organism,
                   Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads,
-                  HVR_moveOn, hvr_script, hvr_path, genome, ighv):
+                  HVR_moveOn, hvr_script, hvr_path, genome, ighv, igkv, iglv):
     idNameDict = makeIdNameDict(mapping)
     fastaDict = makeFastaDict(fasta)
     vdjDict = makeVDJBedDict(bed, idNameDict)
@@ -360,9 +373,9 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
         if os.path.isfile(bestHeavy):
             bestHeavy = runHVRrecon(hvr_script, bestHeavy, 'heavy',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
         if os.path.isfile(bestKappa):
-            bestKappa = runHVRrecon(hvr_script, bestKappa, 'kappa',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
+            bestKappa = runHVRrecon(hvr_script, bestKappa, 'kappa',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, igkv)
         if os.path.isfile(bestLambda):
-            bestLambda = runHVRrecon(hvr_script, bestLambda, 'lambda',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
+            bestLambda = runHVRrecon(hvr_script, bestLambda, 'lambda',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, iglv)
 
     heavyRsemOut = output + '.heavy.rsem.out.genes.results'
     kappaRsemOut = output + '.kappa.rsem.out.genes.results'
@@ -1336,7 +1349,8 @@ def createTCRFullOutput(fastaDict, tcr, outName, bases, mapDict, cSeq, cName, cI
                 for jEns in jSeg:
                     jSeq = fastaDict[jEns]
                     recNameArr = writeRecord(tcrRecord, curSeq, addedC, vEns, jEns, vSeq, jSeq, mapDict,bases, cSeq, cId, cName, outF,fastaDict, recNameArr, True)
-            curSeq = tcrSeq.split('NNNNNN')[1]
+            curSeqArr = tcrSeq.split('NNNNNN')
+            curSeq = curSeqArr[-1]
             vSeg = findBestVforSeq(curSeq,fastaDict,mapDict)
             #print "found V segment:\n"
             #for v in vSeg:

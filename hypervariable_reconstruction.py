@@ -12,7 +12,6 @@ CDR1_END = 114
 CDR2_START = 165
 CDR2_END = 195
 
-
 reconstruction_path, best_iso, reads_file_1, reads_file_2, organism, reads_info, framework_extension, threshold_score, min_reads, max_reads, reads_before_moving_on, output_path_prefix, rsem, imgt_file = sys.argv[1:]
 
 def removeFiles(path_plus_wildcards):
@@ -40,10 +39,12 @@ def genomicNTDict(fasta_file):
 
 def IMGTdict(imgt_file):
 	IMGT_dict = {}
+	genes_visited = []
 	for record in SeqIO.parse(imgt_file, "fasta"):
 		gene, version = record.id.split("|")[1].split("*")
-		if version == "01":
+		if gene not in genes_visited:
 			IMGT_dict[gene.replace("/", "")] = str(record.seq)
+			genes_visited.append(gene)
 	return IMGT_dict
 
 def getGenomicCDRs(imgt_sequence, framework_extension):
@@ -75,6 +76,18 @@ def runPipe(best_iso, reads_file_1, reads_file_2, imgt_file, framework_extension
 	for transcript_record in SeqIO.parse(best_iso, "fasta"):
 
 		V_gene_symbol = transcript_record.id.split(".")[0]
+		#imgt_dict = None
+		#if V_gene_symbol[2] == "H":
+	#		imgt_dict = IMGTdict(biology_folder + "IGHV." + organism + ".fasta")
+		#elif V_gene_symbol[2] == "K":
+		#	imgt_dict = IMGTdict(biology_folder + "IGKV." + organism + ".fasta")
+		#elif V_gene_symbol[2] == "L":
+		#	imgt_dict = IMGTdict(biology_folder + "IGLV." + organism + ".fasta")
+		#else:
+		#	writeMessage("Improper organism name, exiting...\n")
+		#	sys.exit()
+
+
 		genomicCDR1 = ""
 		genomicCDR2 = ""
 
@@ -83,7 +96,7 @@ def runPipe(best_iso, reads_file_1, reads_file_2, imgt_file, framework_extension
 			#writeMessage("{} Genomic CDR1: {}\n".format(V_gene_symbol, genomicCDR1))
 			#writeMessage("{} Genomic CDR2: {}\n".format(V_gene_symbol, genomicCDR2))
 		except KeyError:
-			writeMessage("\nSkipping... {} is not a {} gene\n".format(V_gene_symbol, organism))
+			writeMessage("\nSkipping... {} is not a gene\n".format(V_gene_symbol))
 			continue
 
 		### Make individual transcript fasta file ###
@@ -141,6 +154,7 @@ def runPipe(best_iso, reads_file_1, reads_file_2, imgt_file, framework_extension
 
 
 if __name__ == "__main__":
+
 	if not reconstruction_path.endswith("/"):
 		reconstruction_path += "/"
 	runPipe(best_iso, reads_file_1, reads_file_2, imgt_file, int(framework_extension), threshold_score, min_reads, max_reads, reads_before_moving_on, output_path_prefix, reads_info, rsem)
