@@ -1,27 +1,29 @@
-# Minimum cmake version
-cmake_minimum_required (VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.13)
 
-# Name of project and that it is C++ only.
-project (SeqanReconstruct CXX)
+Project(ReconstructCDRs CXX)
 
-# Search for zlib as a dependency for SeqAn.
-find_package (ZLIB)
+set(CMAKE_CXX_STANDARD 14)
 
-# Load the SeqAn module and fail if not found.
-find_package (SeqAn REQUIRED)
+set(CMAKE_PREFIX_PATH seqan/util/cmake)
 
-# Add include directories.
+set(SEQAN_INCLUDE_PATH seqan/include)
+
+
+find_package(ZLIB)
+
+find_package(SeqAn REQUIRED)
+
 include_directories (${SEQAN_INCLUDE_DIRS})
-
-# Add definitions set by find_package (SeqAn).
 add_definitions (${SEQAN_DEFINITIONS})
 
-# Add CXX flags found by find_package (SeqAn).
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${SEQAN_CXX_FLAGS}")
+add_executable (ReconstructCDRs
+				cdr_reconstruction.cpp 
+				input_output_utilities.h 
+				input_output_utilities.cpp
+				alignment_utilities.h
+				alignment_utilities.cpp
+				declarations.h 
+				parser.h)
 
-# Add executable and link against SeqAn dependencies.
-add_executable (SeqanReconstruct hypervariable_reconstruction.cpp)
-target_link_libraries (SeqanReconstruct ${SEQAN_LIBRARIES})
+target_link_libraries (ReconstructCDRs ${SEQAN_LIBRARIES})
 
-#Call As Follows:
-#cmake ../ -DCMAKE_PREFIX_PATH="$HOME/devel/seqan/util/cmake" -DSEQAN_INCLUDE_PATH="$HOME/devel/seqan/include"

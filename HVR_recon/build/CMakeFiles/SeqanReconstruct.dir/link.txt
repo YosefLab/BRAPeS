@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++14    CMakeFiles/SeqanReconstruct.dir/hypervariable_reconstruction.cpp.o  -o SeqanReconstruct -rdynamic -lpthread -lrt /data/yosef2/users/safik/bin/anaconda2/lib/libz.so -lrt -lpthread /data/yosef2/users/safik/bin/anaconda2/lib/libz.so -lrt -lpthread -Wl,-rpath,/data/yosef2/users/safik/bin/anaconda2/lib 

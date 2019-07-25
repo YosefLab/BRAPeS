@@ -16,14 +16,9 @@ from Bio.Alphabet import IUPAC
 
 
 def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thresholdScore, minOverlap, rsem, bowtie2,
-               singleCell, path, sumF, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample,
-               Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads, HVR_moveOn):
-    checkParameters(strand, singleCell, path, sumF)
-    if singleCell == True:
-        # TODO: Fix this, won't work for SE
-        #runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore, minOverlap,
-        #          rsem, bowtie2, lowQ, singleEnd, fastq, trimmomatic, transInd)
-        sys.exit(0)
+               path, sumF, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample,
+               Hminus, Kminus, Lminus, skipHVR, Hr, Fr):
+    checkParameters(strand, path, sumF, Hr, Fr)
     if path == './':
         path = os.getcwd()
     if not path.endswith('/'):
@@ -32,9 +27,8 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
     tcrFout = open(sumF + '.BCRs.txt','w')
     opened = False
     currFolder = os.path.abspath(os.path.dirname(sys.argv[0])) + '/'
-    hvr_script = currFolder + 'hypervariable_reconstruction.py'
     hvr_path = currFolder + 'HVR_recon'
-    (fasta, bed, mapping, aaF, ighv, igkv, iglv) = getGenomeFiles(currFolder, genome)
+    (fasta, bed, mapping, aaF) = getGenomeFiles(currFolder, genome)
     for cellFolder in os.listdir(path):
         fullPath = path + cellFolder + '/'
         if((os.path.exists(fullPath)) & (os.path.isdir(fullPath))):
@@ -51,12 +45,11 @@ def runBCRpipe(genome, output, bam, unmapped, bases, strand, numIterations,thres
                 sys.stderr.flush()
 
             else:
-                #reconstruction = currFolder + '/vdj.alignment'
                 reconstruction = currFolder + '/vdj.alignment.bcr'
                 runSingleCell(fasta, bed, noutput, nbam, nunmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore,
                             minOverlap, rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, genome,
-                              Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads,
-                              HVR_moveOn, hvr_script, hvr_path, genome, ighv, igkv, iglv)
+                              Hminus, Kminus, Lminus, skipHVR, Hr, Fr,
+                              hvr_path, genome)
                 opened = addCellToTCRsum(cellFolder, noutput, opened, tcrFout)
                 finalStatDict = addToStatDict(noutput, cellFolder, finalStatDict)
     sumFout = open(sumF + '.summary.txt','w')
@@ -73,9 +66,6 @@ def getGenomeFiles(currFolder, genome):
     bed = 'NA'
     mapping = 'NA'
     aaF = 'NA'
-    ighv = 'NA'
-    igkv = 'NA'
-    iglv = 'NA'
     if os.path.isdir(dataFold):
         for ff in os.listdir(dataFold):
             if not ff.startswith('.'):
@@ -83,12 +73,6 @@ def getGenomeFiles(currFolder, genome):
                     bed = dataFold + ff
                 elif ff.endswith('conserved.AA.txt'):
                     aaF = dataFold + ff
-                elif ff.endswith('IGHV.fasta'):
-                    ighv = dataFold + ff
-                elif ff.endswith('IGKV.fasta'):
-                    igkv = dataFold + ff
-                elif ff.endswith('IGLV.fasta'):
-                    iglv = dataFold + ff
                 elif ff.endswith('BCR.fa'):
                     fasta = dataFold + ff
                 elif ff.endswith('gene.id.mapping.BCR.txt'):
@@ -101,20 +85,10 @@ def getGenomeFiles(currFolder, genome):
             sys.exit(str(datetime.datetime.now()) + " Error! BCR bed file is missing in the Data/genome folder\n")
         if (aaF == 'NA'):
             sys.exit(str(datetime.datetime.now()) + " Error! BCR conserved AA file is missing in the Data/genome folder\n")
-        if (ighv == 'NA'):
-            sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGHV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
-            sys.stdout.flush()
-        if (igkv == 'NA'):
-            sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGKV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
-            sys.stdout.flush()
-        if (iglv == 'NA'):
-            sys.stdout.write(str(datetime.datetime.now()) + " Warning! no IGLV.fasta file in the Data/genome folder, will not be able to reconstruct hypervariable regions\n")
-            sys.stdout.flush()
-
     else:
         sys.exit(str(datetime.datetime.now()) + " Error! Genome parameter is invalid, no folder named: " + dataFold + '\n')
 
-    return(fasta, bed, mapping, aaF, ighv, igkv, iglv)
+    return(fasta, bed, mapping, aaF)
 
 def addCellToTCRsum(cellFolder, noutput, opened, tcrFout):
     if os.path.isfile(noutput + '.summary.txt'):
@@ -298,8 +272,8 @@ def makeOutputDir(output, fullPath):
 
 def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, reconstruction, aaF , numIterations, thresholdScore, minOverlap,
                   rsem, bowtie2, NolowQ, samtools, top, byExp, readOverlap, oneSide, downsample, organism,
-                  Hminus, Kminus, Lminus, skipHVR, HVR_extension, HVR_score, HVR_min_reads, HVR_max_reads,
-                  HVR_moveOn, hvr_script, hvr_path, genome, ighv, igkv, iglv):
+                  Hminus, Kminus, Lminus, skipHVR, Hr, Fr,
+                  hvr_path, genome):
     idNameDict = makeIdNameDict(mapping)
     fastaDict = makeFastaDict(fasta)
     vdjDict = makeVDJBedDict(bed, idNameDict)
@@ -344,7 +318,7 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
         outDir = output[:outDirInd+1]
     else:
         outDir = os.getcwd()
-    runRsem(outDir, rsem, bowtie2, fullTcrFileHeavy, fullTcrFileKappa,fullTcrFileLambda, output, samtools)
+    runRsem(outDir, rsem, bowtie2, fullTcrFileHeavy, fullTcrFileKappa,fullTcrFileLambda, output, samtools, False)
     pickFinalIsoforms(fullTcrFileHeavy, fullTcrFileKappa, fullTcrFileLambda , output)
     bestHeavy = output + '.heavy.full.BCRs.bestIso.fa'
     bestKappa = output + '.kappa.full.BCRs.bestIso.fa'
@@ -353,15 +327,15 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
     sys.stdout.flush()
     aaDict = makeAADict(aaF)
     if os.path.isfile(bestHeavy):
-        fDictHeavy = findCDR3(bestHeavy, aaDict, fastaDict )
+        fDictHeavy = findCDR3(bestHeavy, aaDict, fastaDict, False )
     else:
         fDictHeavy = dict()
     if os.path.isfile(bestKappa):
-        fDictKappa = findCDR3(bestKappa, aaDict, fastaDict )
+        fDictKappa = findCDR3(bestKappa, aaDict, fastaDict, False )
     else:
         fDictKappa = dict()
     if os.path.isfile(bestLambda):
-        fDictLambda = findCDR3(bestLambda, aaDict, fastaDict )
+        fDictLambda = findCDR3(bestLambda, aaDict, fastaDict, False )
     else:
         fDictLambda = dict()
     if skipHVR:
@@ -371,18 +345,38 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
         sys.stdout.write(str(datetime.datetime.now()) + " Performing CDR1 and CDR2 reconstruction\n")
         sys.stdout.flush()
         if os.path.isfile(bestHeavy):
-            bestHeavy = runHVRrecon(hvr_script, bestHeavy, 'heavy',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv)
+            bestHeavy = runHVRrecon(bestHeavy, 'heavy', hvr_path, output, genome, downsample, Hr, Fr)
         if os.path.isfile(bestKappa):
-            bestKappa = runHVRrecon(hvr_script, bestKappa, 'kappa',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, igkv)
+            bestKappa = runHVRrecon(bestKappa, 'kappa',hvr_path, output, genome, downsample, Hr, Fr)
         if os.path.isfile(bestLambda):
-            bestLambda = runHVRrecon(hvr_script, bestLambda, 'lambda',HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, iglv)
-
-    heavyRsemOut = output + '.heavy.rsem.out.genes.results'
-    kappaRsemOut = output + '.kappa.rsem.out.genes.results'
-    lambdaRsemOut = output + '.lambda.rsem.out.genes.results'
-    heavyBam = output + '.heavy.rsem.out.transcript.sorted.bam'
-    kappaBam = output + '.kappa.rsem.out.transcript.sorted.bam'
-    lambdaBam = output + '.lambda.rsem.out.transcript.sorted.bam'
+            bestLambda = runHVRrecon(bestLambda, 'lambda', hvr_path, output, genome, downsample, Hr, Fr)
+        runRsem(outDir, rsem, bowtie2, bestHeavy, bestKappa,bestLambda, output, samtools, True)
+    if skipHVR:
+        heavyRsemOut = output + '.heavy.rsem.out.genes.results'
+        kappaRsemOut = output + '.kappa.rsem.out.genes.results'
+        lambdaRsemOut = output + '.lambda.rsem.out.genes.results'
+        heavyBam = output + '.heavy.rsem.out.transcript.sorted.bam'
+        kappaBam = output + '.kappa.rsem.out.transcript.sorted.bam'
+        lambdaBam = output + '.lambda.rsem.out.transcript.sorted.bam'
+    else:
+        if os.path.isfile(bestHeavy):
+            fDictHeavy = findCDR3(bestHeavy, aaDict, fastaDict, True )
+        else:
+            fDictHeavy = dict()
+        if os.path.isfile(bestKappa):
+            fDictKappa = findCDR3(bestKappa, aaDict, fastaDict, True )
+        else:
+            fDictKappa = dict()
+        if os.path.isfile(bestLambda):
+            fDictLambda = findCDR3(bestLambda, aaDict, fastaDict, True )
+        else:
+            fDictLambda = dict()
+        heavyRsemOut = output + '.afterCDRrec.heavy.rsem.out.genes.results'
+        kappaRsemOut = output + '.afterCDRrec.kappa.rsem.out.genes.results'
+        lambdaRsemOut = output + '.afterCDRrec.lambda.rsem.out.genes.results'
+        heavyBam = output + '.afterCDRrec.heavy.rsem.out.transcript.sorted.bam'
+        kappaBam = output + '.afterCDRrec.kappa.rsem.out.transcript.sorted.bam'
+        lambdaBam = output + '.afterCDRrec.lambda.rsem.out.transcript.sorted.bam'
     sys.stdout.write(str(datetime.datetime.now()) + " Writing results to summary file\n")
     sys.stdout.flush()
     makeSingleCellOutputFile(fDictHeavy, fDictKappa, fDictLambda, output, heavyRsemOut,kappaRsemOut , lambdaRsemOut,
@@ -391,11 +385,23 @@ def runSingleCell(fasta, bed, output, bam, unmapped, mapping, bases, strand, rec
 
 
 
-def runHVRrecon(hvr_script, bestIso, chain,HVR_extension, HVR_score, HVR_min_reads,HVR_max_reads,HVR_moveOn, hvr_path, rsem, output, genome, ighv):
+def runHVRrecon(bestIso, chain, hvr_path, output, genome, downsample, Hr, Fr):
     pref = bestIso.replace('.fa','')
-    subprocess.call(['python',hvr_script,hvr_path,bestIso, output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa', genome, 'All',
-                     str(HVR_extension), str(HVR_score), str(HVR_min_reads),str(HVR_max_reads), str(HVR_moveOn), pref, rsem, ighv])
-    curBestIso = pref + '.CDR1.CDR2.reconstructions.fasta'
+    if genome.startswith('hg'):
+        org = 'human'
+    elif genome.startswith('mm'):
+        org = 'mouse'
+    else:
+        print("genome is not human or mouse, not running any CDR1/2 reconstruction")
+    if not downsample:
+        subprocess.call([hvr_path + '/build/ReconstructCDRs','-Hr',str(Hr),'-Fr',str(Fr),'-o',
+                         pref + '.CDR1.CDR2.reconstructions.fasta',output + '.' + chain + '.R1.fa',
+                         output + '.' + chain + '.R2.fa',bestIso, org])
+    else:
+        subprocess.call([hvr_path + '/build/ReconstructCDRs','-Hr',str(Hr),'-Fr',str(Fr),'-M','40000','-o',
+                         pref + '.CDR1.CDR2.reconstructions.fasta',output + '.' + chain + '.R1.fa',
+                         output + '.' + chain + '.R2.fa',bestIso, org])
+    curBestIso = pref + '.CDR1.CDR2.reconstructions.fasta.BCRs.fasta'
     return curBestIso
 
 
@@ -414,161 +420,6 @@ def findBestCtoAppend(cArr, idNameDict, fastaDict, mappedBam, downsample):
             countNum = curCounts
             bestC = i
     return getCInfo(cArr[bestC],idNameDict, fastaDict)
-
-
-def analyzeChainSingleEnd(fastq, trimmomatic, transInd, bowtie2, idNameDict, output, fastaDict, bases, downsample):
-    mappedReadsDictAlpha = dict()
-    mappedReadsDictBeta = dict()
-    lenArr = [999,50,25]
-    for currLen in lenArr:
-        if currLen == 999:
-            steps = ['none']
-        else:
-            steps = ['left','right']
-        for side in steps:
-            if side == 'left':
-                crop = 'CROP:' + str(currLen)
-            elif side == 'right':
-                crop = 'HEADCROP:' + str(currLen)
-            else:
-                crop = ''
-        # TODO: make sure we delete those files
-            trimFq = fastq + '.' + str(currLen) + '.' + str(side) + '.trimmed.fq'
-            # TODO: use bowtie trimmer instead
-            # TODO: make sure about minus strand alignment
-            if crop == '':
-                subprocess.call(['java','-jar', trimmomatic, 'SE','-phred33',fastq ,trimFq, 'LEADING:15','TRAILING:15', 'MINLEN:20'])
-            else:
-                subprocess.call(['java','-jar', trimmomatic, 'SE','-phred33',fastq ,trimFq, 'LEADING:15','TRAILING:15', crop, 'MINLEN:20'])
-            samF = trimFq + '.sam'
-            if bowtie2 != '':
-                if bowtie2.endswith('/'):
-                    bowtieCall = bowtie2 + 'bowtie2'
-                else:
-                    bowtieCall = bowtie2 + '/bowtie2'
-            else:
-                bowtieCall = 'bowtie2'
-            subprocess.call([bowtieCall ,'-q --phred33  --score-min L,0,0', '-x',transInd,'-U',trimFq,'-S',samF])
-            if os.path.isfile(samF):
-                mappedReadsDictAlpha = findReadsAndSegments(samF, mappedReadsDictAlpha, idNameDict,'A')
-                mappedReadsDictBeta = findReadsAndSegments(samF, mappedReadsDictBeta, idNameDict,'B')
-    alphaOut = output + '.alpha.junctions.txt'
-    alphaOutReads = output + '.alpha.mapped.and.unmapped.fa'
-    betaOutReads = output + '.beta.mapped.and.unmapped.fa'
-    betaOut = output + '.beta.junctions.txt'
-    writeJunctionFileSE(mappedReadsDictAlpha, idNameDict, alphaOut, fastaDict, bases, 'alpha')
-    writeJunctionFileSE(mappedReadsDictBeta, idNameDict, betaOut, fastaDict, bases, 'beta')
-    writeReadsFileSE(mappedReadsDictAlpha, alphaOutReads, fastq)
-    writeReadsFileSE(mappedReadsDictBeta, betaOutReads, fastq)
-    sys.exit(1)
-
-
-def writeReadsFileSE(mappedReadsDict, outReads, fastq):
-    if fastq.endswith('.gz'):
-        subprocess.call(['gunzip', fastq])
-        newFq = fastq.replace('.gz','')
-    else:
-        newFq = fastq
-    out = open(outReads, 'w')
-    fqF = open(newFq, 'rU')
-    for record in SeqIO.parse(fqF, 'fastq'):
-        if record.id in mappedReadsDict:
-            newRec = SeqRecord(record.seq, id = record.id, description = '')
-            SeqIO.write(newRec,out,'fasta')
-    out.close()
-    fqF.close()
-    if fastq.endswith('.gz'):
-        subprocess.call(['gzip',newFq])
-
-
-
-def writeJunctionFileSE(mappedReadsDict,idNameDict, output, fastaDict, bases, chain):
-    out = open(output, 'w')
-    vSegs = []
-    jSegs = []
-    cSegs = []
-    for read in mappedReadsDict:
-        for seg in mappedReadsDict[read]:
-            if idNameDict[seg].find('V') != -1:
-                if seg not in vSegs:
-                    vSegs.append(seg)
-            elif idNameDict[seg].find('J') != -1:
-                if seg not in jSegs:
-                    jSegs.append(seg)
-            elif idNameDict[seg].find('C') != -1:
-                if seg not in cSegs:
-                    cSegs.append(seg)
-            else:
-                print "Error! not V/J/C in fasta dict"
-    if len(vSegs) == 0:
-        print "Did not find any V segments for " + chain + " chain"
-    else:
-        if len(cSegs) == 0:
-            print "Did not find any C segments for " + chain + " chain"
-            cSegs = ['NA']
-        if len(jSegs) == 0:
-            print "Did not find any J segments for " + chain + " chain"
-            jSegs = ['NA']
-        for vSeg in vSegs:
-            for jSeg in jSegs:
-                for cSeg in cSegs:
-                    addSegmentToJunctionFileSE(vSeg,jSeg,cSeg,out,fastaDict, bases, idNameDict)
-    out.close()
-
-
-
-
-
-
-def addSegmentToJunctionFileSE(vSeg,jSeg,cSeg,out,fastaDict, bases, idNameDict):
-    vSeq = fastaDict[vSeg]
-    if jSeg != 'NA':
-        jName = idNameDict[jSeg]
-        jSeq = fastaDict[jSeg]
-    else:
-        jSeq = ''
-        jName = 'NoJ'
-    if cSeg != 'NA':
-        cName = idNameDict[cSeg]
-        cSeq = fastaDict[cSeg]
-    else:
-        cName = 'NoC'
-        cSeq = ''
-    jcSeq = jSeq + cSeq
-    lenSeg = min(len(vSeq),len(jcSeq))
-    if bases != -10:
-        if lenSeg < bases:
-            sys.stdout.write(str(datetime.datetime.now()) + ' Bases parameter is bigger than the length of the V or J segment, taking the length' \
-                    'of the V segment instead, which is: ' + str(lenSeg) + '\n')
-            sys.stdout.flush()
-        else:
-            lenSeg = bases
-    jTrim = jcSeq[:lenSeg]
-    vTrim = vSeq[-1*lenSeg:]
-    junc = vTrim + jTrim
-    recordName = vSeg + '.' + jSeg + '.' + cSeg + '(' + idNameDict[vSeg] + '-' + jName + '-' + cName + ')'
-    record = SeqRecord(Seq(junc,IUPAC.ambiguous_dna), id = recordName, description = '')
-    SeqIO.write(record,out,'fasta')
-
-
-def findReadsAndSegments(samF, mappedReadsDict, idNameDict,chain):
-    samFile = pysam.AlignmentFile(samF,'r')
-    readsIter = samFile.fetch(until_eof = True)
-    for read in readsIter:
-        if read.is_unmapped == False:
-            seg = samFile.getrname(read.reference_id)
-            if seg in idNameDict:
-                if idNameDict[seg].find(chain) != -1:
-                    readName = read.query_name
-                    if readName not in mappedReadsDict:
-                        mappedReadsDict[readName] = []
-                    if seg not in mappedReadsDict[readName]:
-                        mappedReadsDict[readName].append(seg)
-    samFile.close()
-    return mappedReadsDict
-
-
-
 
 
 
@@ -597,7 +448,7 @@ def writeChain(outF, chain,cdrDict,rsemF, bamF, fastaDict, unDict, output, idNam
         jStart = -1
         cdrInd = -1
         cInd = -1
-        if cdrDict[tcr]['stat'] == 'Productive':
+        if cdrDict[tcr]['stat'].startswith('Productive'):
             isProd = True
         else:
             isProd = False
@@ -605,6 +456,8 @@ def writeChain(outF, chain,cdrDict,rsemF, bamF, fastaDict, unDict, output, idNam
         if noRsem:
             rank = 'NA'
         else:
+            #print rsemDict
+            #print unRsemDict
             rank = getRank(tcr, rsemDict, unRsemDict, isProd, noRsem)
         fLine += str(rank) + '\t'
         nameArr = tcr.split('.')
@@ -706,7 +559,6 @@ def writeSegDict(segDict, outF, chain):
                 fLine += seg + '\tNA\tNA\n'
             else:
                 fLine += 'NA\t' + seg + '\tNA\n'
-        #print fLine
             outF.write(str(fLine))
 
 
@@ -770,7 +622,8 @@ def getRank(tcr, rsemDict, unRsemDict, isProd, noRsem):
     if isProd:
         currDict = rsemDict
     else:
-        currDict = unRsemDict
+        #currDict = unRsemDict
+        return 'NA'
     if not noRsem:
         currCount = currDict[tcr]
         rank = 1
@@ -823,7 +676,6 @@ def findCountsInRegion(bamF, start, end, tcr, downsample):
             newName = read.query_name + '_2'
         if newName not in readsArr:
             readsArr[newName] = '1'
-        # TODO: Remove this later on, this is just to make BASIC run at a reasonable time!!!
         if downsample:
             if len(readsArr) > 100:
                 mappedFile.close()
@@ -842,7 +694,7 @@ def makeRsemDict(rsemF, cdrDict):
         lArr = l.strip('\n').split('\t')
         name = lArr[1]
         if name in cdrDict:
-            if cdrDict[name]['stat'] == 'Productive':
+            if cdrDict[name]['stat'].startswith('Productive'):
                 fDict[name] = float(lArr[4])
             unDict[name] = float(lArr[4])
         l = f.readline()
@@ -851,7 +703,7 @@ def makeRsemDict(rsemF, cdrDict):
 
 
 
-def findCDR3(fasta, aaDict, vdjFaDict):
+def findCDR3(fasta, aaDict, vdjFaDict, roundtwo):
     f = open(fasta, 'rU')
     fDict = dict()
     for record in SeqIO.parse(f, 'fasta'):
@@ -863,7 +715,7 @@ def findCDR3(fasta, aaDict, vdjFaDict):
             vSeg = idArr[0]
             jSeg = idArr[1]
             if ((vSeg in aaDict) & (jSeg in aaDict)):
-                currDict = findVandJaaMap(aaDict[vSeg],aaDict[jSeg],record.seq)
+                currDict = findVandJaaMap(aaDict[vSeg],aaDict[jSeg],record.seq, roundtwo)
             else:
                 if vSeg in aaDict:
                     newVseg = aaDict[vSeg]
@@ -877,7 +729,7 @@ def findCDR3(fasta, aaDict, vdjFaDict):
                     jId = idArr[4]
                     currSeq= vdjFaDict[jId]
                     newJseg = getBestJaa(Seq(currSeq))
-                currDict = findVandJaaMap(newVseg,newJseg,record.seq)
+                currDict = findVandJaaMap(newVseg,newJseg,record.seq, roundtwo)
             fDict[record.id] = currDict
     f.close()
     return fDict
@@ -959,7 +811,7 @@ def isGoodRF(s):
 
 
 
-def findVandJaaMap(vSeg,jSeg,fullSeq):
+def findVandJaaMap(vSeg,jSeg,fullSeq, roundtwo):
     fDict = dict()
     firstSeq = getNTseq(fullSeq)
     secondSeq = getNTseq(fullSeq[1:])
@@ -970,7 +822,11 @@ def findVandJaaMap(vSeg,jSeg,fullSeq):
     posArr = []
     fPharr = []
     for aaSeq in aaSeqsArr:
-        (cdr, pos, curPh) = getCDR3(aaSeq, vSeg,jSeg)
+        #print "new aaseq"
+        if not roundtwo:
+            (cdr, pos, curPh, foundC) = getCDR3(aaSeq, vSeg,jSeg)
+        else:
+            (cdr, pos, curPh, foundC) = getCDR3secondPass(aaSeq, vSeg,jSeg)
         cdrArr.append(cdr)
         posArr.append(pos)
         fPharr.append(curPh)
@@ -1039,7 +895,10 @@ def findVandJaaMap(vSeg,jSeg,fullSeq):
             if (('Only J' not in cdrArr) & ('Only V' in cdrArr)):
                 stat = 'Unproductive - found only V segment'
             elif (('Only J' in cdrArr) & ('Only V' not in cdrArr)):
-                stat = 'Unproductive - found only J segment'
+                if foundC == "notFoundButV":
+                    stat = 'Productive (2nd-CYS 104 not identified)'
+                else:
+                    stat = 'Unproductive - found only J segment'
             elif (('Only J' not in cdrArr) & ('Only V' not in cdrArr)):
                 stat = 'Unproductive - didn\'t find V and J segment'
             else:
@@ -1053,10 +912,68 @@ def findVandJaaMap(vSeg,jSeg,fullSeq):
     return fDict
 
 
+def getCDR3secondPass(aaSeq, vSeq, jSeq):
+    pos = -1
+    bestScore = 0
+    foundC = "notFound"
+    alignments = pairwise2.align.localms(aaSeq,vSeq,1,-2,-1,-.1)
+    for align in alignments:
+        score = align[2]
+        if float(score) >= bestScore:
+            bestScore = float(score)
+            noGapPos = -1
+            for i in range(0,len(align[1])):
+                if align[1][i] != '-':
+                    noGapPos = i
+            counter = 0
+            for i in range(0,noGapPos+1):
+                if align[0][i] != '-':
+                    counter += 1
+            if pos < counter:
+                pos = counter
+            if align[0][noGapPos] == 'C':
+                foundC = "Found"
+            else:
+                foundC = "notFoundButV"
+    jPos = -1
+    minDistJ = 5
+    curPh = False
+    for j in range(pos+1, len(aaSeq) - len(jSeq) + 1):
+        subAA = aaSeq[j: j + len(jSeq)]
+        if len(subAA) != len(jSeq):
+            sys.stderr.write(str(datetime.datetime.now()) + ' Error! Wrong subj length\n')
+            sys.stderr.flush()
+        dist = 0
+        for m in range(0,len(jSeq)):
+            if jSeq[m] != subAA[m]:
+                dist += 1
+        if (dist <= minDistJ):
+            if isLegal(subAA):
+                jPos = j
+                minDistJ = dist
+                curPh = False
+            else:
+                if dist < minDistJ:
+                    curPh = True
+                    jPos = j
+                    minDistJ = dist
+    if pos == -1:
+        if jPos != -1:
+            return('Only J', jPos, curPh, foundC)
+        else:
+            return('No V/J found', -1, curPh, foundC)
+    else:
+        if jPos == -1:
+            return('Only V',pos, curPh, foundC)
+    return(aaSeq[pos:jPos], pos, curPh, foundC)
+
+
 
 def getCDR3(aaSeq, vSeq, jSeq):
-    minDist = 18
+    minDist = 24
     pos = -1
+    bestScore = 0
+    foundC = "notFound"
     alignments = pairwise2.align.localms(aaSeq,vSeq,1,-2,-1,-.1)
     for align in alignments:
         score = align[2]
@@ -1065,24 +982,15 @@ def getCDR3(aaSeq, vSeq, jSeq):
             for i in range(0,len(align[1])):
                 if align[1][i] != '-':
                     noGapPos = i
+            counter = 0
+            for i in range(0,noGapPos+1):
+                if align[0][i] != '-':
+                    counter += 1
+            pos = counter
             if align[0][noGapPos] == 'C':
-                counter = 0
-                for i in range(0,noGapPos+1):
-                    if align[0][i] != '-':
-                        counter += 1
-                pos = counter
-    #for i in range(0,len(aaSeq) - len(vSeq) + 1):
-    #    subAA = aaSeq[i:i+len(vSeq)]
-    #    if len(subAA) != len(vSeq):
-    #        sys.stderr.write(str(datetime.datetime.now()) + ' Error! Wrong sub length\n')
-    #        sys.stderr.flush()
-    #    dist = 0
-    #    for k in range(0,len(vSeq)):
-    #        if vSeq[k] != subAA[k]:
-    #            dist += 1
-    #    if ((dist < minDist) & (subAA.endswith('C'))):
-    #        minDist = dist
-    #        pos = i + len(vSeq)
+                foundC = "Found"
+            else:
+                foundC = "notFoundButV"
     jPos = -1
     minDistJ = 4
     curPh = False
@@ -1107,13 +1015,13 @@ def getCDR3(aaSeq, vSeq, jSeq):
                     minDistJ = dist
     if pos == -1:
         if jPos != -1:
-            return('Only J', jPos, curPh)
+            return('Only J', jPos, curPh, foundC)
         else:
-            return('No V/J found', -1, curPh)
+            return('No V/J found', -1, curPh, foundC)
     else:
         if jPos == -1:
-            return('Only V',pos, curPh)
-    return(aaSeq[pos:jPos], pos, curPh )
+            return('Only V',pos, curPh, foundC)
+    return(aaSeq[pos:jPos], pos, curPh, foundC)
 
 # Checks that the conserved amino acids remain
 def isLegal(subAA):
@@ -1261,11 +1169,11 @@ def findBestC(vjArr, rsemF):
         return vjArr[0]
 
 
-def runRsem(outDir, rsem, bowtie2, fullTcrFileHeavy, fullTcrFileKappa,fullTcrFileLambda, output, samtools):
+def runRsem(outDir, rsem, bowtie2, fullTcrFileHeavy, fullTcrFileKappa,fullTcrFileLambda, output, samtools, secondRound):
     if samtools != '':
         if samtools[-1] != '/':
             samtools += '/'
-    rsemIndDir = outDir + 'rsem_ind' + str(random.randint(1,1000000))
+    rsemIndDir = outDir + 'rsem_ind' + str(random.randint(1,100000000))
     if os.path.exists(rsemIndDir) == False:
         os.makedirs(rsemIndDir)
     if rsem != '':
@@ -1274,36 +1182,61 @@ def runRsem(outDir, rsem, bowtie2, fullTcrFileHeavy, fullTcrFileKappa,fullTcrFil
     if bowtie2 != '':
         if bowtie2[-1] != '/':
             bowtie2 += '/'
-    runRSEMonOneFile(fullTcrFileHeavy, rsem, bowtie2, rsemIndDir, output, samtools, "heavy")
-    runRSEMonOneFile(fullTcrFileKappa, rsem, bowtie2, rsemIndDir, output, samtools, "kappa")
-    runRSEMonOneFile(fullTcrFileLambda, rsem, bowtie2, rsemIndDir, output, samtools, "lambda")
+    runRSEMonOneFile(fullTcrFileHeavy, rsem, bowtie2, rsemIndDir, output, samtools, "heavy", secondRound)
+    runRSEMonOneFile(fullTcrFileKappa, rsem, bowtie2, rsemIndDir, output, samtools, "kappa", secondRound)
+    runRSEMonOneFile(fullTcrFileLambda, rsem, bowtie2, rsemIndDir, output, samtools, "lambda", secondRound)
     shutil.rmtree(rsemIndDir)
 
 
 
-def runRSEMonOneFile(resF, rsem, bowtie2, rsemIndDir, output, samtools, chain):
+def runRSEMonOneFile(resF, rsem, bowtie2, rsemIndDir, output, samtools, chain, secondRound):
     if os.path.exists(resF):
         if bowtie2 != '':
-            with open(os.devnull, 'w') as devnull:
-                subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2', '--bowtie2-path', bowtie2 ,
-                                 '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
-                subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
-                                 '--bowtie2', '--bowtie2-path',bowtie2, '--bowtie2-mismatch-rate', '0.0' , '--paired-end',
-                                 output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
-                                 rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
+            if not secondRound:
+                with open(os.devnull, 'w') as devnull:
+                    subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2', '--bowtie2-path', bowtie2 ,
+                                     '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
+                    subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
+                                     '--bowtie2', '--bowtie2-path',bowtie2, '--bowtie2-mismatch-rate', '0.0' , '--paired-end',
+                                     output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
+                                     rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
+            else:
+                with open(os.devnull, 'w') as devnull:
+                    subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2', '--bowtie2-path', bowtie2 ,
+                                     '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
+                    subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
+                                     '--bowtie2', '--bowtie2-path',bowtie2, '--bowtie2-mismatch-rate', '0.0' , '--paired-end',
+                                     output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
+                                     rsemIndDir + '/VDJ.' + chain + '.seq', output + '.afterCDRrec.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
+
         else:
-            with open(os.devnull, 'w') as devnull:
-                subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2',
-                                 '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
-                subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
-                                 '--bowtie2', '--bowtie2-mismatch-rate', '0.0', '--paired-end',
-                                 output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
-                                 rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
-        unsortedBam = output + '.' + chain + '.rsem.out.transcript.bam'
+            if not secondRound:
+                with open(os.devnull, 'w') as devnull:
+                    subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2',
+                                     '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
+                    subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
+                                     '--bowtie2', '--bowtie2-mismatch-rate', '0.0', '--paired-end',
+                                     output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
+                                     rsemIndDir + '/VDJ.' + chain + '.seq', output + '.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
+            else:
+                with open(os.devnull, 'w') as devnull:
+                    subprocess.call([rsem + 'rsem-prepare-reference' , '--bowtie2',
+                                     '-q', resF, rsemIndDir + '/VDJ.' + chain + '.seq'], stdout=devnull, stderr=devnull)
+                    subprocess.call([rsem + 'rsem-calculate-expression', '--no-qualities', '-q',
+                                     '--bowtie2', '--bowtie2-mismatch-rate', '0.0', '--paired-end',
+                                     output + '.' + chain + '.R1.fa', output + '.' + chain + '.R2.fa',
+                                     rsemIndDir + '/VDJ.' + chain + '.seq', output + '.afterCDRrec.' + chain + '.rsem.out'], stdout=devnull, stderr=devnull)
+        if not secondRound:
+            unsortedBam = output + '.' + chain + '.rsem.out.transcript.bam'
+        else:
+            unsortedBam = output + '.afterCDRrec.' + chain + '.rsem.out.transcript.bam'
         if not os.path.exists(unsortedBam):
             print "RSEM did not produce any transcript alignment files for " + chain + " chain, please check the -rsem parameter"
         else:
-            sortedBam = output + '.' + chain + '.rsem.out.transcript.sorted.bam'
+            if not secondRound:
+                sortedBam = output + '.' + chain + '.rsem.out.transcript.sorted.bam'
+            else:
+                sortedBam = output + '.afterCDRrec.' + chain + '.rsem.out.transcript.sorted.bam'
             if not os.path.exists(sortedBam):
                 print "sorting bam file"
                 subprocess.call([samtools + 'samtools', 'sort','-o',sortedBam, unsortedBam])
@@ -2150,16 +2083,19 @@ def makeIdNameDict(mapping):
     return fDict
 
 
-def checkParameters(strand, singleCell, path, sumF):
+def checkParameters(strand, path, sumF, Hr, Fr):
     if strand.lower() not in ['none','minus','plus']:
         sys.exit("-strand should be one of: none, minus, plus")
-    if not singleCell:
-        if path == '':
-            sys.exit("when running on multiple cells you must include the -path parameter")
-        if sumF == '':
-            sys.exit("when running on multiple cells you must include the -sumF parameter")
-        if not os.path.isdir(path):
-            sys.exit("%s path does not exists. Please check your -path parameter and run again" % path)
+    if ((Hr < 0) | (Hr > 1)):
+        sys.exit("Mutation rate for complementary determining regions should be between 0 and 1")
+    if ((Fr < 0) | (Fr > 1)):
+        sys.exit("Mutation rate for framework regions should be between 0 and 1")
+    if path == '':
+        sys.exit("Must include the -path parameter")
+    if sumF == '':
+        sys.exit("Must include the -sumF parameter")
+    if not os.path.isdir(path):
+        sys.exit("%s path does not exists. Please check your -path parameter and run again" % path)
 
 
 
@@ -2169,8 +2105,6 @@ def checkParameters(strand, singleCell, path, sumF):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-genome','-g','-G', help='Alignment genome. Currently supported: mm10, mm10_ncbi and hg38. Other genomes require the user to prepare their own annotation files', required=True)
-    parser.add_argument('-singleCell', help='add if you are only running on a single cell. If so,'
-                                                        'it will ignore -path and -subpath arguments', action='store_true')
     parser.add_argument('-NoLowQ', help='add if you want to remove \"low quality\" reads as input to the reconstruction '
                                                         'algorithm', action='store_true')
     parser.add_argument('-oneSide', help='add if you want to observe reconstrctuion only from the V side', action='store_true')
@@ -2199,17 +2133,11 @@ if __name__ == '__main__':
                                                         'read count, until top is reached', action='store_true')
     parser.add_argument('-downsample', help='Add this flag in case of a very large files (>100,000 mapped V/J/C reads to subsample the data'\
                                                         'with this option, the total number of mapped reads output by BRAPeS is lower than the true measure.', action='store_true')
-    parser.add_argument('-skipHVR', help='Add this flag if you want to skip reconstruction of CDR1 and CDR2', action='store_true')
-    parser.add_argument('-HVR_extension','-HVR_ext', help='The number of bases to extend the CDR1/2 region on both sides for the reconstruction. '
-                                               'Default is 15.', type=int, default=15)
-    parser.add_argument('-HVR_score','-HVR_sc', help='The alignment score threshold of the CDR1/2 reconstruction. '
-                                               'Default is 15', type=int, default=15)
-    parser.add_argument('-HVR_min_reads','-HVR_min', help='The minimal number of reads that needs to be mapped to the CDR1 or CDR2 to be considered a valid reconstruction. '
-                                               'Default is 10', type=int, default=10)
-    parser.add_argument('-HVR_max_reads','-HVR_max', help='The max number of reads that will be mapped to the CDR1 or CDR2 before using those reads to reconstruct the CDR1/2 sequnece. '
-                                               'Default is 200', type=int, default=200)
-    parser.add_argument('-HVR_moveOn','-HVR_mo', help='The number of reads randomly sampled for CDR1/2 reconstruction. BRAPeS will try to align this number of reads to the CDR segmenets. If after aligning this number of reads there are less than HVR_min_reads mapped to the CDR, '
-                                               'the software will not attempt reconstruction. Default is 30000', type=int, default=30000)
+    parser.add_argument('-skipHVR', help='Add this flag if you want to skip reconstruction of CDR1, CDR2 and the framework regions', action='store_true')
+    parser.add_argument('-Hr','-max_h_mutation_rate', help='Maximum allowed mutation rate for complementary determining regions (CDR1 and CDR2). '
+                                               'Default is 0.35.', type=float, default=0.35)
+    parser.add_argument('-Fr','-max_f_mutation_rate', help='Maximum allowed mutation rate for framework regions (FR1, FR2, FR3 and FR4). '
+                                               'Default is 0.2.', type=float, default=0.2)
     parser.add_argument('-overlap','-ol','-OL', help='Number of minimum bases that overlaps V and J ends,'
                                                               'default is 10', type=int, default=10)
     parser.add_argument('-Hminus', help='Only when running BRAPeS on user defined genomes. Add this flag if the annotation of the V/J segmenets'\
@@ -2222,7 +2150,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     runBCRpipe(args.genome, args.output, args.bam, args.unmapped, args.bases, args.strand,
                 args.iterations,args.score, args.overlap, args.rsem, args.bowtie2,
-                  args.singleCell, args.path, args.sumF, args.NoLowQ, args.samtools, args.top, args.byExp, args.readOverlap,
-                  args.oneSide, args.downsample, args.Hminus, args.Kminus, args.Lminus, args.skipHVR, args.HVR_extension,
-               args.HVR_score, args.HVR_min_reads, args.HVR_max_reads, args.HVR_moveOn)
+                  args.path, args.sumF, args.NoLowQ, args.samtools, args.top, args.byExp, args.readOverlap,
+                  args.oneSide, args.downsample, args.Hminus, args.Kminus, args.Lminus, args.skipHVR, args.Hr,
+               args.Fr)
 
