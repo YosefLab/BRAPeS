@@ -1,0 +1,2 @@
+sample	heavy	kappa	lambda
+ERR1467921	Productive	Productive	Failed - didn't find any V and J segments in original mapping

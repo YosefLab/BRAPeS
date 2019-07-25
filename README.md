@@ -48,6 +48,8 @@ To test that BRAPeS is installed correctly, run the following command:
  /path-to-BRAPeS/Example/BRAPeS_out/example.output.summary.txt
  /path-to-BRAPeS/Example/BRAPeS_out/example.output.BCRs.txt
  
+ Test files were processed from raw fastq files taken from "Wu,Y.L., Stubbington,M.J.T., Daly,M., Teichmann,S.A. and Rada,C. (2016) Intrinsic transcriptional heterogeneity in B cells controls early class switching to IgE. J. Exp. Med."
+ 
 ###Options when running BRAPeS <br />
 
 **Input files:** <br />
