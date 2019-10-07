@@ -40,13 +40,13 @@ To test that BRAPeS is installed correctly, run the following command:
 
 >python /path-to-BRAPeS/brapes.py -genome mm10_ncbi -path /path-to-BRAPeS/Example/proc_data/ -sumF /path-to-BRAPeS/Example/BRAPeS_out/BCR.out -output BRAPeS_out/BCR.out -score 15 -top 10 -byExp -unmapped unmapped.bam -bam sorted.bam
  
- This should produce the following files:
- /path-to-BRAPeS/Example/BRAPeS_out/BCR.out.summary.txt
- /path-to-BRAPeS/Example/BRAPeS_out/BCR.out.BCRs.txt
+ This should produce the following files: <br />
+ /path-to-BRAPeS/Example/BRAPeS_out/BCR.out.summary.txt <br />
+ /path-to-BRAPeS/Example/BRAPeS_out/BCR.out.BCRs.txt <br />
  
- which should be similar to the files:
- /path-to-BRAPeS/Example/BRAPeS_out/example.output.summary.txt
- /path-to-BRAPeS/Example/BRAPeS_out/example.output.BCRs.txt
+ which should be similar to the files: <br />
+ /path-to-BRAPeS/Example/BRAPeS_out/example.output.summary.txt <br />
+ /path-to-BRAPeS/Example/BRAPeS_out/example.output.BCRs.txt <br />
  
  Test files were processed from raw fastq files taken from "Wu,Y.L., Stubbington,M.J.T., Daly,M., Teichmann,S.A. and Rada,C. (2016) Intrinsic transcriptional heterogeneity in B cells controls early class switching to IgE. J. Exp. Med."
  
