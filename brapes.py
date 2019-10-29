@@ -1949,6 +1949,7 @@ def writeJunctions(vjReads,outName, bases, fastaDict, idNameDict, cSeq, top, vjC
     out = open(outName,'w')
     fArr = []
     pairCountDict = dict()
+    seqsDict = dict()
     for seg in vjReads:
         if idNameDict[seg].find('J') != -1 :
             if len(vjReads[seg]) > 0 :
@@ -1983,15 +1984,16 @@ def writeJunctions(vjReads,outName, bases, fastaDict, idNameDict, cSeq, top, vjC
                             recordName = sSeg + '.' + seg + '(' + idNameDict[sSeg] + '-' + idNameDict[seg] + ')'
                             record = SeqRecord(Seq(junc,IUPAC.ambiguous_dna), id = recordName, description = '')
                             curCont = vjCountsDict[seg] + vjCountsDict[sSeg]
-                            pairCountDict[record] = curCont
+                            pairCountDict[str(record.seq)] = curCont
+                            seqsDict[str(record.seq)] = record
     sorted_pairs = sorted(pairCountDict.items(), key=operator.itemgetter(1), reverse=True)
     if ((top == -1) | (top > len(sorted_pairs))):
-        for rec in pairCountDict:
-            SeqIO.write(rec ,out,'fasta')
+        for rec in seqsDict:
+            SeqIO.write(seqsDict[rec] ,out,'fasta')
     else:
         if not byExp:
             for i in range(0,top):
-                SeqIO.write(sorted_pairs[i][0],out,'fasta')
+                SeqIO.write(seqsDict[sorted_pairs[i][0]],out,'fasta')
         else:
             wrote = 1
             SeqIO.write(sorted_pairs[0][0],out,'fasta')
@@ -2001,12 +2003,12 @@ def writeJunctions(vjReads,outName, bases, fastaDict, idNameDict, cSeq, top, vjC
                 if sorted_pairs[i][1] == curCount:
                     if not wroteSecond:
                         wroteSecond = True
-                        SeqIO.write(sorted_pairs[i][0],out,'fasta')
+                        SeqIO.write(seqsDict[sorted_pairs[i][0]],out,'fasta')
                         wrote += 1
                 else:
                     curCount = sorted_pairs[i][1]
                     wroteSecond = False
-                    SeqIO.write(sorted_pairs[i][0],out,'fasta')
+                    SeqIO.write(seqsDict[sorted_pairs[i][0]],out,'fasta')
                     wrote += 1
                 if wrote == top:
                     break
