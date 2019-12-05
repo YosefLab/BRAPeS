@@ -110,7 +110,7 @@ def addCellToTCRsum(cellFolder, noutput, opened, tcrFout):
 
 def addToStatDict(noutput, cellFolder, finalStatDict):
     if cellFolder in finalStatDict:
-        print "Error! %s appear more than once in final stat dictionary" % cellFolder
+        print("Error! %s appear more than once in final stat dictionary" % cellFolder)
     finalStatDict[cellFolder] = {'heavy':'Failed - found V and J segments but wasn\'t able to extend them',
                                  'kappa':'Failed - found V and J segments but wasn\'t able to extend them',
                                  'lambda':'Failed - found V and J segments but wasn\'t able to extend them'}
@@ -1231,14 +1231,14 @@ def runRSEMonOneFile(resF, rsem, bowtie2, rsemIndDir, output, samtools, chain, s
         else:
             unsortedBam = output + '.afterCDRrec.' + chain + '.rsem.out.transcript.bam'
         if not os.path.exists(unsortedBam):
-            print "RSEM did not produce any transcript alignment files for " + chain + " chain, please check the -rsem parameter"
+            print("RSEM did not produce any transcript alignment files for " + chain + " chain, please check the -rsem parameter")
         else:
             if not secondRound:
                 sortedBam = output + '.' + chain + '.rsem.out.transcript.sorted.bam'
             else:
                 sortedBam = output + '.afterCDRrec.' + chain + '.rsem.out.transcript.sorted.bam'
             if not os.path.exists(sortedBam):
-                print "sorting bam file"
+                print("sorting bam file")
                 subprocess.call([samtools + 'samtools', 'sort','-o',sortedBam, unsortedBam])
                 subprocess.call([samtools + 'samtools', 'index', sortedBam])
     else:
@@ -1382,7 +1382,7 @@ def findBestJforSeq(curSeq,fastaDict,idNameDict):
             return jArrOld
         else:
             jArrOld = newArr
-    print 'Found a full J segment as the V/J junction, ignoring this reconstruction'
+    print('Found a full J segment as the V/J junction, ignoring this reconstruction')
     return 'NA'
 
 def findBestVforSeq(curSeq,fastaDict,idNameDict):
@@ -1395,7 +1395,7 @@ def findBestVforSeq(curSeq,fastaDict,idNameDict):
             return vArrOld
         else:
             vArrOld = newArr
-    print 'Found a full V segment as the V/J junction, ignoring this reconstruction'
+    print('Found a full V segment as the V/J junction, ignoring this reconstruction')
     return 'NA'
 
 def findVsPerLen(curSeq, fastaDict, idNameDict,trim):
@@ -1794,7 +1794,7 @@ def writeUnmappedReads(unmappedDict, out, unmapped, seqDict, unDict, alignedDict
                     else:
                         seqDict[cName][1] = qSeq
     f.close()
-    print "Added " + str(count) + " unmapped reads to the reads file"
+    print("Added " + str(count) + " unmapped reads to the reads file")
     return (seqDict, unDict)
 
 # Aligned dict - all the reads (with _1/_2) that were already written to the mapped.unmapped.fa file
@@ -2116,7 +2116,7 @@ if __name__ == '__main__':
     parser.add_argument('-bowtie2','-bw','-BW', help='Path to bowtie2. If not used assumes that bowtie2 is in the'
                                                  'default path', default = '')
     parser.add_argument('-rsem','-RSEM', help='Path to rsem. If not used assumes that rsem is in the'
-                                                'default path', default = '/data/yosef/users/safik/bin/rsem-1.2.21/')
+                                                'default path', default = '')
     parser.add_argument('-strand', help='Strand of the right most read in genomic coordinates. Options are: [minus, plus, '
                                         'none]. Defualt is minus', default = 'minus')
     parser.add_argument('-output','-out','-o','-O', help='output prefix, relative to /path/singleCellFolder', required=True)
