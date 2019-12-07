@@ -4,7 +4,7 @@ We present BRAPeS (BCR Reconstruction Algorithm for Paired-End Single-cell), a s
 
 BRAPeS is an extension of [TRAPeS](https://github.com/YosefLab/TRAPeS) which reconstructs the BCR in 5 steps: For each chain, it first identify the V and J segments by searching for paired reads with one read mapping to the V segment and its mate mapping to the J segment. Then, a set of putative CDR3-originating reads are identified as the set of unmapped reads whose mates map to the V,J and C segments. Next, an iterative dynamic programming algorithm is used to reconstruct the CDR3 region with the putative CDR3 reads. The isotype of the BCR is then determined by running RSEM on the reconstructed sequence with all possible constant segments added to it. Finally, BRAPeS corrects for somatic hypermutations by collecting all reads aligning to the genomic CDR1, CDR2 and Framework sequences and aligning the reads against themselves to obtain a reconstruction of the consensus sequence. <br /> 
 
-For more information, see our paper in [Life Science Alliance](https://www.life-science-alliance.org/content/2/4/e201900371.abstract) or our preprint on [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
+For more information, see our paper in [Life Science Alliance](https://www.life-science-alliance.org/content/2/4/e201900371.abstract) or our preprint in [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
 <br />  
 
 ##installing BRAPeS <br />  
