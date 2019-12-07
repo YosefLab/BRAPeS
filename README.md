@@ -50,7 +50,8 @@ To test that BRAPeS is installed correctly, run the following command:
  
  Test files were processed from raw fastq files taken from "Wu,Y.L., Stubbington,M.J.T., Daly,M., Teichmann,S.A. and Rada,C. (2016) Intrinsic transcriptional heterogeneity in B cells controls early class switching to IgE. J. Exp. Med."
  
- ##Running BRAPeS on macOS
+ ##Running BRAPeS on macOS <br />
+
  To run BRAPeS on macOS, you will need to compile the CDR3 reconstruction algorithm. To do that you will need the seqan c++ pacakge. From the BRAPeS folder compile using the commend: <br />
  
  >g++ vdjAlignment.bcr.cpp -I path-to-seqan/include -o vdj.alignment.bcr<br />
