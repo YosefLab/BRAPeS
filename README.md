@@ -7,7 +7,7 @@ BRAPeS is an extension of [TRAPeS](https://github.com/YosefLab/TRAPeS) which rec
 For more information, see our paper in [Life Science Alliance](https://www.life-science-alliance.org/content/2/4/e201900371.abstract) or our preprint in [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
 <br />  
 
-##installing BRAPeS <br />  
+## installing BRAPeS <br />  
 
 BRAPeS is written in Python and C++ and works on Linux (see comment below if you wish to run BRAPeS on mac). BRAPeS requires the following python libraries: <br />  
 
@@ -25,7 +25,7 @@ BRAPeS takes as input mapped and unmapped files of reads after genomic alignment
 BRAPeS assumes a certain folder structure: It assumes that each cell has its own folder, and all of those folders are under one path. Also, it assumes that each cell folder has identical subfolder structure.<br />
 In case the genomic alignment was done with a software that output only one bam file (e.g. STAR), you can provide BRAPeS with the same file as both the mapped and unmapped file. Please email us if this produces an error.<br />
  
-##Running BRAPeS <br />
+## Running BRAPeS <br />
 
 To run BRAPeS, simply run:<br />
  
@@ -50,7 +50,7 @@ To test that BRAPeS is installed correctly, run the following command:
  
  Test files were processed from raw fastq files taken from "Wu,Y.L., Stubbington,M.J.T., Daly,M., Teichmann,S.A. and Rada,C. (2016) Intrinsic transcriptional heterogeneity in B cells controls early class switching to IgE. J. Exp. Med."
  
- ##Running BRAPeS on macOS <br />
+ ## Running BRAPeS on macOS <br />
 
  To run BRAPeS on macOS, you will need to compile the CDR3 reconstruction algorithm. To do that you will need the seqan c++ pacakge. From the BRAPeS folder compile using the commend: <br />
  
@@ -59,7 +59,7 @@ To test that BRAPeS is installed correctly, run the following command:
  <br /><br />
  
  
-###Options when running BRAPeS <br />
+### Options when running BRAPeS <br />
 
 **Input files:** <br />
 <br />
