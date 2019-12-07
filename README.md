@@ -4,12 +4,12 @@ We present BRAPeS (BCR Reconstruction Algorithm for Paired-End Single-cell), a s
 
 BRAPeS is an extension of [TRAPeS](https://github.com/YosefLab/TRAPeS) which reconstructs the BCR in 5 steps: For each chain, it first identify the V and J segments by searching for paired reads with one read mapping to the V segment and its mate mapping to the J segment. Then, a set of putative CDR3-originating reads are identified as the set of unmapped reads whose mates map to the V,J and C segments. Next, an iterative dynamic programming algorithm is used to reconstruct the CDR3 region with the putative CDR3 reads. The isotype of the BCR is then determined by running RSEM on the reconstructed sequence with all possible constant segments added to it. Finally, BRAPeS corrects for somatic hypermutations by collecting all reads aligning to the genomic CDR1, CDR2 and Framework sequences and aligning the reads against themselves to obtain a reconstruction of the consensus sequence. <br /> 
 
-For more information, see our paper on [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
+For more information, see our paper in [Life Science Alliance](https://www.life-science-alliance.org/content/2/4/e201900371.abstract) or our preprint on [bioRxiv](https://www.biorxiv.org/content/early/2018/08/10/389999)
 <br />  
 
 ##installing BRAPeS <br />  
 
-BRAPeS is written in Python and C++ and works on Linux. BRAPeS requires the following python libraries: <br />  
+BRAPeS is written in Python and C++ and works on Linux (see comment below if you wish to run BRAPeS on mac). BRAPeS requires the following python libraries: <br />  
 
 -	biopython  <br />
 -	pysam  <br />
@@ -49,6 +49,14 @@ To test that BRAPeS is installed correctly, run the following command:
  /path-to-BRAPeS/Example/BRAPeS_out/example.output.BCRs.txt <br />
  
  Test files were processed from raw fastq files taken from "Wu,Y.L., Stubbington,M.J.T., Daly,M., Teichmann,S.A. and Rada,C. (2016) Intrinsic transcriptional heterogeneity in B cells controls early class switching to IgE. J. Exp. Med."
+ 
+ ##Running BRAPeS on macOS
+ To run BRAPeS on macOS, you will need to compile the CDR3 reconstruction algorithm. To do that you will need the seqan c++ pacakge. From the BRAPeS folder compile using the commend: <br />
+ 
+ >g++ vdjAlignment.bcr.cpp -I path-to-seqan/include -o vdj.alignment.bcr<br />
+ 
+ <br /><br />
+ 
  
 ###Options when running BRAPeS <br />
 
