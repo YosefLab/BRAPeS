@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
     bool reconstructFR4 = false;
     std::cout << "\nWorking on " << vGene << "...\n" << std::endl;
     if (arguments.organism == "human") {
-      if (parseJGenes(jGene.c_str(), "../seqs/J.human.conserved.fa", JRegion)) {
+      if (parseJGenes(jGene.c_str(), "HVR_recon/seqs/J.human.conserved.fa", JRegion)) {
         JRegion = getFR4ReferenceSeq(brapesIsotypeSeq, JRegion, 10);
         reconstructFR4 = true;
       } else {
@@ -57,20 +57,20 @@ int main(int argc, char** argv) {
         //std::cout << jGene << " reference: " << JRegion << std::endl;
         std::cout << "No IMGT reference for " << jGene << ". Will skip FR4 reconstruction...\n";
       }
-      if (parseVGenes(vGene.c_str(), "../seqs/human.fasta", FR1, FR2, FR3, CDR1, CDR2)) {
+      if (parseVGenes(vGene.c_str(), "HVR_recon/seqs/human.fasta", FR1, FR2, FR3, CDR1, CDR2)) {
     
       } else {
         std::cout << "No IMGT reference for " << vGene << ". Skipping...\n";
         continue;
       } 
     } else {
-      if (parseJGenes(jGene.c_str(), "../seqs/J.mouse.conserved.fa", JRegion)) {
+      if (parseJGenes(jGene.c_str(), "HVR_recon/seqs/J.mouse.conserved.fa", JRegion)) {
         JRegion = getFR4ReferenceSeq(brapesIsotypeSeq, JRegion, 10);
         reconstructFR4 = true;
       } else {
         std::cout << "No IMGT reference for " << jGene << ". Will skip FR4 reconstruction...\n";
       }
-      if (parseVGenes(vGene.c_str(), "../seqs/mouse.fasta", FR1, FR2, FR3, CDR1, CDR2)) {
+      if (parseVGenes(vGene.c_str(), "HVR_recon/seqs/mouse.fasta", FR1, FR2, FR3, CDR1, CDR2)) {
 
       } else {
         std::cout << "No IMGT reference for " << vGene << ". Skipping...\n";
