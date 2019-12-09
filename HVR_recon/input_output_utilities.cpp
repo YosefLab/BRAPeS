@@ -38,7 +38,7 @@ bool parseVGenes(const char *vGene,
 				 CharString& CDR1,
 				 CharString& CDR2) {
 
-	std::ifstream genomicSeqFile(toCString(getAbsolutePath(filePath)));
+	std::ifstream genomicSeqFile(filePath);
 	std::stringstream genomicSeqFileStream;
 	while (genomicSeqFile >> genomicSeqFileStream.rdbuf());
 
@@ -130,7 +130,7 @@ bool parseJGenes(const char *jGene,
 				 const char *filePath,
 				 CharString& JRegion) {
 
-	std::ifstream genomicSeqFile(toCString(getAbsolutePath(filePath)));
+	std::ifstream genomicSeqFile(filePath);
 	std::stringstream genomicSeqFileStream;
 	while (genomicSeqFile >> genomicSeqFileStream.rdbuf());
 
