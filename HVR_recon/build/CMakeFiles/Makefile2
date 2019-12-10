@@ -59,10 +59,10 @@ RM = /data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs
+CMAKE_SOURCE_DIR = /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build
+CMAKE_BINARY_DIR = /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build
 
 #=============================================================================
 # Target rules for target CMakeFiles/ReconstructCDRs.dir
@@ -71,7 +71,7 @@ CMAKE_BINARY_DIR = /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/Reconstru
 CMakeFiles/ReconstructCDRs.dir/all:
 	$(MAKE) -f CMakeFiles/ReconstructCDRs.dir/build.make CMakeFiles/ReconstructCDRs.dir/depend
 	$(MAKE) -f CMakeFiles/ReconstructCDRs.dir/build.make CMakeFiles/ReconstructCDRs.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles --progress-num=1,2,3,4 "Built target ReconstructCDRs"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles --progress-num=1,2,3,4 "Built target ReconstructCDRs"
 .PHONY : CMakeFiles/ReconstructCDRs.dir/all
 
 # Include target in all.
@@ -81,9 +81,9 @@ all: CMakeFiles/ReconstructCDRs.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/ReconstructCDRs.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles 4
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/ReconstructCDRs.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles 0
 .PHONY : CMakeFiles/ReconstructCDRs.dir/rule
 
 # Convenience name for target.

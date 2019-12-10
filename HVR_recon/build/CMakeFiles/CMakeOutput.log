@@ -10,38 +10,38 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/3.14.4/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/3.14.4/CompilerIdCXX/a.out"
 
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_3a99c/fast 
-/usr/bin/make -f CMakeFiles/cmTC_3a99c.dir/build.make CMakeFiles/cmTC_3a99c.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_3a99c.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTC_3a99c.dir/testCXXCompiler.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_3a99c
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3a99c.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_3a99c.dir/testCXXCompiler.cxx.o  -o cmTC_3a99c 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_12b78/fast 
+/usr/bin/make -f CMakeFiles/cmTC_12b78.dir/build.make CMakeFiles/cmTC_12b78.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_12b78.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTC_12b78.dir/testCXXCompiler.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_12b78
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_12b78.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_12b78.dir/testCXXCompiler.cxx.o  -o cmTC_12b78 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_3134c/fast 
-/usr/bin/make -f CMakeFiles/cmTC_3134c.dir/build.make CMakeFiles/cmTC_3134c.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++    -v -o CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o -c /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp
+Run Build Command(s):/usr/bin/make cmTC_10fc5/fast 
+/usr/bin/make -f CMakeFiles/cmTC_10fc5.dir/build.make CMakeFiles/cmTC_10fc5.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++    -v -o CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o -c /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 Target: x86_64-linux-gnu
 Configured with: ../src/configure -v --with-pkgversion='Ubuntu 5.4.0-6ubuntu1~16.04.11' --with-bugurl=file:///usr/share/doc/gcc-5/README.Bugs --enable-languages=c,ada,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-5 --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-5-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-5-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-5-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
 Thread model: posix
 gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/5/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o -version -fstack-protector-strong -Wformat -Wformat-security -o /tmp/ccfHg7jP.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/5/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o -version -fstack-protector-strong -Wformat -Wformat-security -o /tmp/ccugvBaJ.s
 GNU C++ (Ubuntu 5.4.0-6ubuntu1~16.04.11) version 5.4.0 20160609 (x86_64-linux-gnu)
 	compiled by GNU C version 5.4.0 20160609, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
@@ -63,15 +63,15 @@ GNU C++ (Ubuntu 5.4.0-6ubuntu1~16.04.11) version 5.4.0 20160609 (x86_64-linux-gn
 	compiled by GNU C version 5.4.0 20160609, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3
 GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
 Compiler executable checksum: 8c2b43f572cd3f060e41aeab70254763
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- as -v --64 -o CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccfHg7jP.s
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccugvBaJ.s
 GNU assembler version 2.26.1 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.26.1
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
-Linking CXX executable cmTC_3134c
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3134c.dir/link.txt --verbose=1
-/usr/bin/c++      -v CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_3134c 
+COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+Linking CXX executable cmTC_10fc5
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10fc5.dir/link.txt --verbose=1
+/usr/bin/c++      -v CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_10fc5 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper
@@ -81,9 +81,9 @@ Thread model: posix
 gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3134c' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccJ0bnZq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_3134c /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_10fc5' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccw9t45U.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_10fc5 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit include dir info from above output: rv=done
@@ -111,21 +111,21 @@ Parsed CXX implicit include dir info from above output: rv=done
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command(s):/usr/bin/make cmTC_3134c/fast ]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_3134c.dir/build.make CMakeFiles/cmTC_3134c.dir/build]
-  ignore line: [make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++    -v -o CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o -c /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Run Build Command(s):/usr/bin/make cmTC_10fc5/fast ]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_10fc5.dir/build.make CMakeFiles/cmTC_10fc5.dir/build]
+  ignore line: [make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++    -v -o CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o -c /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [Target: x86_64-linux-gnu]
   ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 5.4.0-6ubuntu1~16.04.11' --with-bugurl=file:///usr/share/doc/gcc-5/README.Bugs --enable-languages=c,ada,c++,java,go,d,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-5 --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --with-system-zlib --disable-browser-plugin --enable-java-awt=gtk --enable-gtk-cairo --with-java-home=/usr/lib/jvm/java-1.5.0-gcj-5-amd64/jre --enable-java-home --with-jvm-root-dir=/usr/lib/jvm/java-1.5.0-gcj-5-amd64 --with-jvm-jar-dir=/usr/lib/jvm-exports/java-1.5.0-gcj-5-amd64 --with-arch-directory=amd64 --with-ecj-jar=/usr/share/java/eclipse-ecj.jar --enable-objc-gc --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu]
   ignore line: [Thread model: posix]
   ignore line: [gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) ]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/5/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o -version -fstack-protector-strong -Wformat -Wformat-security -o /tmp/ccfHg7jP.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/5/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /data/yosef2/users/safik/bin/cmake-3.14.4/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpbase CMakeCXXCompilerABI.cpp -mtune=generic -march=x86-64 -auxbase-strip CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o -version -fstack-protector-strong -Wformat -Wformat-security -o /tmp/ccugvBaJ.s]
   ignore line: [GNU C++ (Ubuntu 5.4.0-6ubuntu1~16.04.11) version 5.4.0 20160609 (x86_64-linux-gnu)]
   ignore line: [	compiled by GNU C version 5.4.0 20160609, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3]
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
@@ -147,15 +147,15 @@ Parsed CXX implicit link information from above output:
   ignore line: [	compiled by GNU C version 5.4.0 20160609, GMP version 6.1.0, MPFR version 3.1.4, MPC version 1.0.3]
   ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
   ignore line: [Compiler executable checksum: 8c2b43f572cd3f060e41aeab70254763]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [ as -v --64 -o CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccfHg7jP.s]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [ as -v --64 -o CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccugvBaJ.s]
   ignore line: [GNU assembler version 2.26.1 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.26.1]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  ignore line: [Linking CXX executable cmTC_3134c]
-  ignore line: [/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3134c.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_3134c ]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  ignore line: [Linking CXX executable cmTC_10fc5]
+  ignore line: [/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_10fc5.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_10fc5 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper]
@@ -165,13 +165,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_3134c' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccJ0bnZq.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_3134c /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_10fc5' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccw9t45U.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_10fc5 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccJ0bnZq.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccw9t45U.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -188,7 +188,7 @@ Parsed CXX implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_3134c] ==> ignore
+    arg [cmTC_10fc5] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o] ==> ignore
@@ -200,7 +200,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/5/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/5/../../..]
-    arg [CMakeFiles/cmTC_3134c.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_10fc5.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -226,17 +226,17 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_a516f/fast 
-/usr/bin/make -f CMakeFiles/cmTC_a516f.dir/build.make CMakeFiles/cmTC_a516f.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_a516f.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_a516f.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_a516f
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a516f.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_a516f.dir/feature_tests.cxx.o  -o cmTC_a516f 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_8fc42/fast 
+/usr/bin/make -f CMakeFiles/cmTC_8fc42.dir/build.make CMakeFiles/cmTC_8fc42.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_8fc42.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_8fc42.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_8fc42
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8fc42.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_8fc42.dir/feature_tests.cxx.o  -o cmTC_8fc42 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -299,17 +299,17 @@ make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_e6cff/fast 
-/usr/bin/make -f CMakeFiles/cmTC_e6cff.dir/build.make CMakeFiles/cmTC_e6cff.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_e6cff.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_e6cff.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_e6cff
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e6cff.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_e6cff.dir/feature_tests.cxx.o  -o cmTC_e6cff 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_ae393/fast 
+/usr/bin/make -f CMakeFiles/cmTC_ae393.dir/build.make CMakeFiles/cmTC_ae393.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ae393.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_ae393.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_ae393
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ae393.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_ae393.dir/feature_tests.cxx.o  -o cmTC_ae393 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -372,17 +372,17 @@ make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_e071d/fast 
-/usr/bin/make -f CMakeFiles/cmTC_e071d.dir/build.make CMakeFiles/cmTC_e071d.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_e071d.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_e071d.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_e071d
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e071d.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_e071d.dir/feature_tests.cxx.o  -o cmTC_e071d 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_951f0/fast 
+/usr/bin/make -f CMakeFiles/cmTC_951f0.dir/build.make CMakeFiles/cmTC_951f0.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_951f0.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_951f0.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_951f0
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_951f0.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_951f0.dir/feature_tests.cxx.o  -o cmTC_951f0 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -445,17 +445,17 @@ make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_239f3/fast 
-/usr/bin/make -f CMakeFiles/cmTC_239f3.dir/build.make CMakeFiles/cmTC_239f3.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_239f3.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_239f3.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_239f3
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_239f3.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_239f3.dir/feature_tests.cxx.o  -o cmTC_239f3 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_40b95/fast 
+/usr/bin/make -f CMakeFiles/cmTC_40b95.dir/build.make CMakeFiles/cmTC_40b95.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_40b95.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_40b95.dir/feature_tests.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_40b95
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40b95.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_40b95.dir/feature_tests.cxx.o  -o cmTC_40b95 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -516,17 +516,17 @@ make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/
     Feature record: CXX_FEATURE:0cxx_variadic_macros
     Feature record: CXX_FEATURE:0cxx_variadic_templates
 Performing C++ SOURCE FILE Test CXX14_BUILTIN succeeded with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_7a2b4/fast 
-/usr/bin/make -f CMakeFiles/cmTC_7a2b4.dir/build.make CMakeFiles/cmTC_7a2b4.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_7a2b4.dir/src.cxx.o
-/usr/bin/c++    -DCXX14_BUILTIN   -std=gnu++14 -o CMakeFiles/cmTC_7a2b4.dir/src.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_7a2b4
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7a2b4.dir/link.txt --verbose=1
-/usr/bin/c++   -DCXX14_BUILTIN    CMakeFiles/cmTC_7a2b4.dir/src.cxx.o  -o cmTC_7a2b4 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_e0ee8/fast 
+/usr/bin/make -f CMakeFiles/cmTC_e0ee8.dir/build.make CMakeFiles/cmTC_e0ee8.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e0ee8.dir/src.cxx.o
+/usr/bin/c++    -DCXX14_BUILTIN   -std=gnu++14 -o CMakeFiles/cmTC_e0ee8.dir/src.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_e0ee8
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e0ee8.dir/link.txt --verbose=1
+/usr/bin/c++   -DCXX14_BUILTIN    CMakeFiles/cmTC_e0ee8.dir/src.cxx.o  -o cmTC_e0ee8 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 Source file was:
 #if !defined(__cplusplus) || (__cplusplus < 201300L)
@@ -534,16 +534,16 @@ Source file was:
     #endif
     int main() {}
 Determining if the include file execinfo.h exists passed with the following output:
-Change Dir: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp
+Change Dir: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_05eda/fast 
-/usr/bin/make -f CMakeFiles/cmTC_05eda.dir/build.make CMakeFiles/cmTC_05eda.dir/build
-make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_05eda.dir/CheckIncludeFile.cxx.o
-/usr/bin/c++    -std=gnu++14 -o CMakeFiles/cmTC_05eda.dir/CheckIncludeFile.cxx.o -c /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
-Linking CXX executable cmTC_05eda
-/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_05eda.dir/link.txt --verbose=1
-/usr/bin/c++      -Wl,--whole-archive -lpthread -Wl,--no-whole-archive  CMakeFiles/cmTC_05eda.dir/CheckIncludeFile.cxx.o  -o cmTC_05eda 
-make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/CMakeFiles/CMakeTmp'
+Run Build Command(s):/usr/bin/make cmTC_3f147/fast 
+/usr/bin/make -f CMakeFiles/cmTC_3f147.dir/build.make CMakeFiles/cmTC_3f147.dir/build
+make[1]: Entering directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_3f147.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -std=gnu++14 -o CMakeFiles/cmTC_3f147.dir/CheckIncludeFile.cxx.o -c /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+Linking CXX executable cmTC_3f147
+/data/yosef2/users/safik/bin/cmake-3.14.4/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3f147.dir/link.txt --verbose=1
+/usr/bin/c++      -Wl,--whole-archive -lpthread -Wl,--no-whole-archive  CMakeFiles/cmTC_3f147.dir/CheckIncludeFile.cxx.o  -o cmTC_3f147 
+make[1]: Leaving directory '/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/CMakeFiles/CMakeTmp'
 
 

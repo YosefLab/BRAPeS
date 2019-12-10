@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++14
 
 CXX_DEFINES = -DSEQAN_HAS_EXECINFO=1 -DSEQAN_HAS_ZLIB=1 -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE
 
-CXX_INCLUDES = -I/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/seqan/include 
+CXX_INCLUDES = -I/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/seqan/include 
 

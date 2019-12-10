@@ -529,9 +529,9 @@ CMakeFiles/ReconstructCDRs.dir/alignment_utilities.cpp.o
  ../seqan/include/seqan/ucsc_io/ucsc_file.h
  ../seqan/include/seqan/ucsc_io/ucsc_io.h
  ../seqan/include/seqan/ucsc_io/ucsc_record.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.cpp
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.cpp
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
 CMakeFiles/ReconstructCDRs.dir/cdr_reconstruction.cpp.o
  ../seqan/include/seqan/align.h
  ../seqan/include/seqan/align/align_base.h
@@ -1074,11 +1074,11 @@ CMakeFiles/ReconstructCDRs.dir/cdr_reconstruction.cpp.o
  ../seqan/include/seqan/ucsc_io/ucsc_io.h
  ../seqan/include/seqan/ucsc_io/ucsc_record.h
  ../seqan/include/seqan/version.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/cdr_reconstruction.cpp
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/parser.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/cdr_reconstruction.cpp
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/parser.h
 CMakeFiles/ReconstructCDRs.dir/input_output_utilities.cpp.o
  ../seqan/include/seqan/align.h
  ../seqan/include/seqan/align/align_base.h
@@ -1607,6 +1607,6 @@ CMakeFiles/ReconstructCDRs.dir/input_output_utilities.cpp.o
  ../seqan/include/seqan/ucsc_io/ucsc_file.h
  ../seqan/include/seqan/ucsc_io/ucsc_io.h
  ../seqan/include/seqan/ucsc_io/ucsc_record.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.cpp
- /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.cpp
+ /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.h

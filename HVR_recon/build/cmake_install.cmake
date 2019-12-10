@@ -1,4 +1,4 @@
-# Install script for directory: /data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs
+# Install script for directory: /data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

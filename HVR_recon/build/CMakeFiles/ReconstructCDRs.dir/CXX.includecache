@@ -2958,27 +2958,27 @@ seqan/ucsc_io/ucsc_file.h
 
 ../seqan/include/seqan/version.h
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.cpp
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.cpp
 alignment_utilities.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.h
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.h
 declarations.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/cdr_reconstruction.cpp
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/cdr_reconstruction.cpp
 iostream
 -
 declarations.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
 input_output_utilities.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.h
 alignment_utilities.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/alignment_utilities.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/alignment_utilities.h
 parser.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/parser.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/parser.h
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
 seqan/seq_io.h
 -
 seqan/sequence.h
@@ -3006,19 +3006,19 @@ fstream
 algorithm
 -
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.cpp
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.cpp
 input_output_utilities.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.h
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/input_output_utilities.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/input_output_utilities.h
 declarations.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
 
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/parser.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/parser.h
 iostream
 -
 seqan/arg_parse.h
 -
 declarations.h
-/data/yosef2/users/safik/BRAPeS/HVR_recon/newRecVer/ReconstructCDRs/declarations.h
+/data/yosef2/users/safik/BRAPeS/BRAPeS/HVR_recon/declarations.h
 
