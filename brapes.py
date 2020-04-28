@@ -1996,7 +1996,7 @@ def writeJunctions(vjReads,outName, bases, fastaDict, idNameDict, cSeq, top, vjC
                 SeqIO.write(seqsDict[sorted_pairs[i][0]],out,'fasta')
         else:
             wrote = 1
-            SeqIO.write(sorted_pairs[0][0],out,'fasta')
+            SeqIO.write(seqsDict[sorted_pairs[0][0]],out,'fasta')
             curCount = sorted_pairs[0][1]
             wroteSecond = False
             for i in range(1,len(sorted_pairs)):
